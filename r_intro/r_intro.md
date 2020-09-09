@@ -1,37 +1,6 @@
 Introduction to R
 ================
 
-  - [Introduction](#introduction)
-      - [Objectives](#objectives)
-      - [A brief orientation to
-        RStudio](#a-brief-orientation-to-rstudio)
-  - [Functions and objects](#functions-and-objects)
-      - [Using functions](#using-functions)
-      - [Assigning objects](#assigning-objects)
-      - [Vectors](#vectors)
-      - [Manipulating vectors](#manipulating-vectors)
-      - [Missing data](#missing-data)
-  - [Working with data](#working-with-data)
-      - [Importing spreadsheet-style data into
-        R](#importing-spreadsheet-style-data-into-r)
-      - [Data frames](#data-frames)
-      - [Subsetting data frames](#subsetting-data-frames)
-      - [Exporting data](#exporting-data)
-      - [Exercises](#exercises)
-  - [Data manipulation with dplyr](#data-manipulation-with-dplyr)
-      - [Installing and loading
-        packages](#installing-and-loading-packages)
-      - [Selecting columns and rows](#selecting-columns-and-rows)
-      - [Combining commands](#combining-commands)
-      - [Mutate](#mutate)
-      - [Split-apply-combine](#split-apply-combine)
-      - [Filtering data based on number of cases of each
-        type](#filtering-data-based-on-number-of-cases-of-each-type)
-  - [Wrapping up](#wrapping-up)
-      - [Closing RStudio](#closing-rstudio)
-
-<!--class1.md is generated from class1.Rmd. Please edit that file -->
-
 # Introduction
 
 This training adapted from the [Fred Hutch Intro to
@@ -326,6 +295,22 @@ because R is assuming you mean `round(x = 1, digits = 3.14)`.
 **Exercise:** what does the function `hist` do? What are its main
 arguments? How did you determine this?
 
+<details>
+
+<summary>**Solution**</summary>
+
+`hist` computes a histogram from data and plots it. There is a required
+argument `x`, which is the data. The function has many optional
+arguments, but `breaks` is an important one, which specifies how the
+data will be split to produce the histogram. You can find this either by
+executing `?hist` or by searching for `hist` in the Help pane.
+
+``` r
+?hist
+```
+
+</details>
+
 ## Assigning objects
 
 So far, we’ve been performing tasks with R that require us to input the
@@ -464,6 +449,47 @@ width  <- width - 20        # width?
 mass_index <- mass/width  # mass_index?
 ```
 
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+mass <- 47.5
+mass
+```
+
+    ## [1] 47.5
+
+``` r
+width  <- 122
+width
+```
+
+    ## [1] 122
+
+``` r
+mass <- mass * 2.0
+mass
+```
+
+    ## [1] 95
+
+``` r
+width  <- width - 20 
+width
+```
+
+    ## [1] 102
+
+``` r
+mass_index <- mass/width
+mass_index
+```
+
+    ## [1] 0.9313725
+
+</details>
+
 ## Vectors
 
 So far, we’ve worked with objects containing a single value. For most
@@ -548,6 +574,34 @@ are character data, rather than object names.
   - What type of data is `organs`?
   - get overview of `organs`
 
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+length(organs)
+```
+
+    ## [1] 3
+
+``` r
+class(organs)
+```
+
+    ## [1] "character"
+
+``` r
+str(organs)
+```
+
+    ##  chr [1:3] "lung" "prostate" "breast"
+
+</details>
+
+<p>
+
+</p>
+
 We’ve seen data as numbers and letters so far. In fact, R has all of the
 following basic data types:
 
@@ -566,10 +620,8 @@ class. R automatically interprets the type as you enter data. Most data
 analysis activities will not require you to understand specific details
 of the other data types.
 
-**Exercise:** R tends to handle interpreting data types in the
-background of most operations. The following code is designed to cause
-some unexpected results in R. What is unusual about each of the
-following objects?
+**Exercise:** What happens when we try to mix multiple types of data in
+a single vector?
 
 ``` r
 num_char <- c(1, 2, 3, "a")
@@ -577,6 +629,48 @@ num_logical <- c(1, 2, 3, TRUE)
 char_logical <- c("a", "b", "c", TRUE)
 tricky <- c(1, 2, 3, "4")
 ```
+
+<details>
+
+<summary>**Solution**</summary>
+
+Vectors can be of only one data type. R tries to convert (coerce) the
+content of this vector to find a “common denominator” that doesn’t lose
+any information.
+
+``` r
+num_char
+```
+
+    ## [1] "1" "2" "3" "a"
+
+In `num_char`, the numerics are converted to characters.
+
+``` r
+num_logical
+```
+
+    ## [1] 1 2 3 1
+
+In `num_logical`, the logical is converted to numeric (`1`).
+
+``` r
+char_logical
+```
+
+    ## [1] "a"    "b"    "c"    "TRUE"
+
+In `char_logical`, the logical is converted to character (`"TRUE"`)
+
+``` r
+tricky
+```
+
+    ## [1] "1" "2" "3" "4"
+
+In `tricky`, the numerics are converted to characters.
+
+</details>
 
 ## Manipulating vectors
 
@@ -702,7 +796,7 @@ You can also combine conditions with `&`, but this means any single
 value must meet **both** conditions:
 
 ``` r
-# ages greater than 50 OR less than 60
+# ages greater than 50 AND less than 60
 ages[ages > 50 & ages < 60]
 ```
 
@@ -716,13 +810,44 @@ ages[ages > 50 & ages < 60]
 
 **Exercise:** Is it possible to apply more than two conditions at once?
 
+<details>
+
+<summary>**Solution**</summary> Yes, but you may need parentheses to
+specify the grouping. For example, the following selects all ages that
+are either less than 55 or between 59 and 64:
+
+``` r
+ages[ages < 55 | (ages >= 59 & ages <= 64)]
+```
+
+    ## [1] 30 50 60
+
+</details>
+
+<p>
+
+</p>
+
 **Exercise:** What does the following code return, and why?
 
 ``` r
 "four" > "five"
 ```
 
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+"four" > "five"
+```
+
     ## [1] TRUE
+
+R interprets these as character data, and five comes before four
+alphabetically, which is used to assess the logic statement.
+
+</details>
 
 ## Missing data
 
@@ -858,6 +983,63 @@ more_heights <- c(63, 69, 60, 65, NA, 68, 61, 70, 61, 59, 64, 69, 63, 63, NA, 72
   - Identify how many elements in the vector are greater than 67 inches
   - Visualize the data as a histogram (hint: function `hist`)
 
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+# option 1: remove NAs from heights using na.omit
+more_heights_clean <- na.omit(more_heights)
+
+# option 2: remove NAs from heights by indexing on !is.na
+more_heights_clean <- more_heights[!is.na(more_heights)]
+
+# calculate median of heights (multiple answers)
+median(more_heights, na.rm = TRUE)
+```
+
+    ## [1] 64
+
+``` r
+median(more_heights_clean)
+```
+
+    ## [1] 64
+
+``` r
+# identify how many elements from more_heights are greater than 67 inches (multiple answers)
+length(more_heights_clean[more_heights_clean > 67])
+```
+
+    ## [1] 6
+
+``` r
+sum(more_heights_clean > 67)
+```
+
+    ## [1] 6
+
+``` r
+sum(more_heights > 67, na.rm=TRUE)
+```
+
+    ## [1] 6
+
+``` r
+length(which(more_heights > 67))
+```
+
+    ## [1] 6
+
+``` r
+# visualize data as a histogram (hint: function hist)
+hist(more_heights_clean)
+```
+
+![](r_intro_files/figure-gfm/unnamed-chunk-47-1.png)<!-- -->
+
+</details>
+
 # Working with data
 
 ## Importing spreadsheet-style data into R
@@ -883,7 +1065,7 @@ the dataset:
 
 ``` r
 # download data from url
-download.file("https://raw.githubusercontent.com/jsfalk/acer_r_intro/master/r_intro/data/clinical.csv", "data/clinical.csv")
+#download.file("https://raw.githubusercontent.com/jsfalk/acer_tutorials/master/r_intro/data/animals.csv", "data/animals.csv")
 ```
 
 The code above has two arguments, both encompassed in quotation marks:
@@ -893,12 +1075,6 @@ indicate where R should store a copy of the file on your own computer.
 The output from that command may look alarming, but it represents
 information confirming it worked. You can click on the `data` folder to
 ensure the file is now present.
-
-Notice that the URL above ends in `clinical.csv`, which is also the name
-we used to save the file on our computers. If you click on the URL and
-view it in a web browser, the format isn’t particularly easy for us to
-understand. You can also view the file by clicking on it in the lower
-right hand panel, then selecting “View File.”
 
 > The option to “Import Dataset” you see after clicking on the file
 > references some additional tools present in RStudio that can assist
@@ -911,58 +1087,46 @@ The data we’ve downloaded are in csv format, which stands for “comma
 separated values.” This means the data are organized into rows and
 columns, with columns separated by commas.
 
-These data are arranged in a tidy format, meaning each row represents an
-observation, and each column represents a variable (piece of data for
-each observation). Moreover, only one piece of data is entered in each
-cell.
-
 Now that the data are downloaded, we can import the data and assign to
 an object:
 
 ``` r
 # import data and assign to object
-clinical <- read.csv("data/clinical.csv")
-library(dplyr)
+animals <- read.csv("data/animals.csv")
 ```
 
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-You should see `clinical` appear in the Environment window on the upper
-right panel in RStudio. If you click on `clinical` there, a new tab will
+You should see `animals` appear in the Environment window on the upper
+right panel in RStudio. If you click on `animals` there, a new tab will
 appear next to your R script in the Source window.
 
 > Clicking on the name of an object in the Environment window is a
-> shortcut for running `View(clinical)`; you’ll see this code appear in
+> shortcut for running `View(animals)`; you’ll see this code appear in
 > the Console after clicking.
 
 Now that we have the data imported and assigned to an object, we can
 take some time to explore the data we’ll be using for the rest of this
-course:
+course. We are investigating the animal species diversity and weights
+found within plots at our study site. Each row holds information for a
+single animal, and the columns represent:
 
-  - These data are clinical cancer data from the [National Cancer
-    Institute’s Genomic Data Commons](https://gdc.cancer.gov),
-    specifically from The Cancer Genome Atlas, or
-    [TCGA](https://www.cancer.gov/about-nci/organization/ccg/research/structural-genomics/tcga).
-  - Each row represents a patient, and each column represents
-    information about demographics (race, age at diagnosis, etc) and
-    disease (e.g., cancer type).
+| Column           | Description                        |
+| ---------------- | ---------------------------------- |
+| year             | year of observation                |
+| sex              | sex of animal (“M”, “F”)           |
+| hindfoot\_length | length of the hindfoot in mm       |
+| weight           | weight of the animal in grams      |
+| genus            | genus of animal                    |
+| species          | species of animal                  |
+| taxon            | e.g. Rodent, Reptile, Bird, Rabbit |
+| plot\_type       | type of plot                       |
 
 The function we used to import the data is one of a family of commands
 used to import the data. Check out the help documentation for `read.csv`
 for more options for importing data.
 
 > You can also import data directly into R using `read.csv`, using
-> `clinical <-
-> read.csv("https://raw.githubusercontent.com/fredhutchio/R_intro/master/extra/clinical.csv")`.
+> `animals <-
+> read.csv("https://raw.githubusercontent.com/jsfalk/acer_tutorials/master/r_intro/data/animals.csv")`.
 > For these lessons, we model downloading and importing in two steps, so
 > you retain a copy of the data on your computer. This reflects how
 > you’re likely to import your own data, as well as recommended
@@ -986,35 +1150,28 @@ To learn more about this data frame, we’ll first explore its dimensions:
 
 ``` r
 # assess size of data frame
-dim(clinical)
+dim(animals)
 ```
 
-    ## [1] 6832    8
+    ## [1] 34786     8
 
-The output reflects the number of rows first (6832), then the number of
+The output reflects the number of rows first (34786), then the number of
 columns (8).
 
 We can also preview the content by showing the first few rows:
 
 ``` r
 # preview first few rows
-head(clinical) 
+head(animals) 
 ```
 
-    ##   tumor_stage vital_status disease gender year_of_birth days_to_death
-    ## 1    stage ia         dead    LUSC   male          1936           371
-    ## 2    stage ib         dead    LUSC   male          1931           136
-    ## 3    stage ib         dead    LUSC female          1927          2304
-    ## 4    stage ia        alive    LUSC   male          1930            NA
-    ## 5   stage iib         dead    LUSC   male          1923           146
-    ## 6  stage iiia        alive    LUSC female          1942            NA
-    ##   cigarettes_per_day years_smoked
-    ## 1          10.958904           NA
-    ## 2           2.191781           NA
-    ## 3           1.643836           NA
-    ## 4           1.095890           NA
-    ## 5                 NA           NA
-    ## 6           2.739726           NA
+    ##   year  sex hindfoot_length weight   genus  species   taxa plot_type
+    ## 1 1977    M              32     NA Neotoma albigula Rodent   Control
+    ## 2 1977    M              31     NA Neotoma albigula Rodent   Control
+    ## 3 1977 <NA>              NA     NA Neotoma albigula Rodent   Control
+    ## 4 1977 <NA>              NA     NA Neotoma albigula Rodent   Control
+    ## 5 1977 <NA>              NA     NA Neotoma albigula Rodent   Control
+    ## 6 1977 <NA>              NA     NA Neotoma albigula Rodent   Control
 
 The default number of rows shown is six. You can specify a different
 number using the `n =` parameter, demonstrated below using `tail`, which
@@ -1022,31 +1179,30 @@ shows the last few rows
 
 ``` r
 # show last three rows
-tail(clinical, n = 3) 
+tail(animals, n = 3) 
 ```
 
-    ##       tumor_stage vital_status disease gender year_of_birth days_to_death
-    ## 6830 not reported         dead     UCS female          1932           949
-    ## 6831 not reported        alive     UCS female          1945            NA
-    ## 6832 not reported        alive     UCS female          1957            NA
-    ##      cigarettes_per_day years_smoked
-    ## 6830                 NA           NA
-    ## 6831                 NA           NA
-    ## 6832                 NA           NA
+    ##       year  sex hindfoot_length weight       genus  species   taxa
+    ## 34784 1998    F              20      8  Peromyscus leucopus Rodent
+    ## 34785 1998 <NA>              NA     NA Chaetodipus      sp. Rodent
+    ## 34786 2000 <NA>              NA     NA Chaetodipus      sp. Rodent
+    ##              plot_type
+    ## 34784 Rodent Exclosure
+    ## 34785 Rodent Exclosure
+    ## 34786 Rodent Exclosure
 
 We often need to reference the names of columns, so it’s useful to print
 only those to the screen:
 
 ``` r
 # view column names
-names(clinical) 
+names(animals) 
 ```
 
-    ## [1] "tumor_stage"        "vital_status"       "disease"           
-    ## [4] "gender"             "year_of_birth"      "days_to_death"     
-    ## [7] "cigarettes_per_day" "years_smoked"
+    ## [1] "year"            "sex"             "hindfoot_length" "weight"         
+    ## [5] "genus"           "species"         "taxa"            "plot_type"
 
-It’s also possible to view row names using`rownames(clinical)`, but our
+It’s also possible to view row names using`rownames(animals)`, but our
 data only possess numbers for row names so it’s not very informative.
 
 As we learned last time, we can use `str` to provide a general overview
@@ -1054,59 +1210,58 @@ of the object:
 
 ``` r
 # show overview of object
-str(clinical) 
+str(animals) 
 ```
 
-    ## 'data.frame':    6832 obs. of  8 variables:
-    ##  $ tumor_stage       : chr  "stage ia" "stage ib" "stage ib" "stage ia" ...
-    ##  $ vital_status      : chr  "dead" "dead" "dead" "alive" ...
-    ##  $ disease           : chr  "LUSC" "LUSC" "LUSC" "LUSC" ...
-    ##  $ gender            : chr  "male" "male" "female" "male" ...
-    ##  $ year_of_birth     : int  1936 1931 1927 1930 1923 1942 1953 1932 1929 1923 ...
-    ##  $ days_to_death     : int  371 136 2304 NA 146 NA 345 716 2803 973 ...
-    ##  $ cigarettes_per_day: num  10.96 2.19 1.64 1.1 NA ...
-    ##  $ years_smoked      : int  NA NA NA NA NA NA NA NA NA NA ...
+    ## 'data.frame':    34786 obs. of  8 variables:
+    ##  $ year           : int  1977 1977 1977 1977 1977 1977 1977 1978 1978 1978 ...
+    ##  $ sex            : chr  "M" "M" NA NA ...
+    ##  $ hindfoot_length: int  32 31 NA NA NA NA NA NA NA NA ...
+    ##  $ weight         : int  NA NA NA NA NA NA NA NA 218 NA ...
+    ##  $ genus          : chr  "Neotoma" "Neotoma" "Neotoma" "Neotoma" ...
+    ##  $ species        : chr  "albigula" "albigula" "albigula" "albigula" ...
+    ##  $ taxa           : chr  "Rodent" "Rodent" "Rodent" "Rodent" ...
+    ##  $ plot_type      : chr  "Control" "Control" "Control" "Control" ...
 
 The output provided includes:
 
   - data structure: data frame
-  - dimensions: 6832 rows and 8 columns
+  - dimensions: 34786 rows and 8 columns
   - column-by-column information: each prefaced with a `$`, and includes
     the column name, data type (num, int, Factor)
 
-> Depending on the version of R you are using, the types of
-> `tumor_stage`, `vital_status`, `disease`, and `gender` may be Factor
-> or chr. We will discuss this in greater detail in the intermediate R
-> session.
+> Depending on the version of R you are using, the types of variables
+> like “sex” and “genus” may be Factor or chr. We will discuss this in
+> greater detail in the intermediate R session.
 
 Finally, we can also examine basic summary statistics for each column:
 
 ``` r
 # provide summary statistics for each column
-summary(clinical) 
+summary(animals) 
 ```
 
-    ##  tumor_stage        vital_status         disease             gender         
-    ##  Length:6832        Length:6832        Length:6832        Length:6832       
+    ##       year          sex            hindfoot_length     weight      
+    ##  Min.   :1977   Length:34786       Min.   : 2.00   Min.   :  4.00  
+    ##  1st Qu.:1984   Class :character   1st Qu.:21.00   1st Qu.: 20.00  
+    ##  Median :1990   Mode  :character   Median :32.00   Median : 37.00  
+    ##  Mean   :1990                      Mean   :29.29   Mean   : 42.67  
+    ##  3rd Qu.:1997                      3rd Qu.:36.00   3rd Qu.: 48.00  
+    ##  Max.   :2002                      Max.   :70.00   Max.   :280.00  
+    ##                                    NA's   :3348    NA's   :2503    
+    ##     genus             species              taxa            plot_type        
+    ##  Length:34786       Length:34786       Length:34786       Length:34786      
     ##  Class :character   Class :character   Class :character   Class :character  
     ##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
     ##                                                                             
     ##                                                                             
     ##                                                                             
-    ##                                                                             
-    ##  year_of_birth  days_to_death     cigarettes_per_day  years_smoked  
-    ##  Min.   :1902   Min.   :    0.0   Min.   : 0.008     Min.   : 8.00  
-    ##  1st Qu.:1937   1st Qu.:  274.0   1st Qu.: 1.370     1st Qu.:30.75  
-    ##  Median :1947   Median :  524.0   Median : 2.192     Median :40.00  
-    ##  Mean   :1948   Mean   :  878.2   Mean   : 2.599     Mean   :39.96  
-    ##  3rd Qu.:1957   3rd Qu.: 1044.5   3rd Qu.: 3.288     3rd Qu.:50.00  
-    ##  Max.   :1993   Max.   :10870.0   Max.   :40.000     Max.   :63.00  
-    ##  NA's   :170    NA's   :4645      NA's   :5661       NA's   :6384
+    ## 
 
-For numeric data (such as `years_smoked`), this output includes common
+For numeric data (such as `weight`), this output includes common
 statistics like median and mean, as well as the number of rows
 (patients) with missing data (as `NA`). For factors (character data,
-such as `disease`), you’re given a count of the number of times the top
+such as `genus`), you’re given a count of the number of times the top
 six most frequent factors (categories) occur in the data frame.
 
 ## Subsetting data frames
@@ -1116,7 +1271,7 @@ relevant information from them.
 
 ``` r
 # extract first column and assign to a variable
-first_column <- clinical[1]
+first_column <- animals[1]
 ```
 
 As discussed last time with vectors, the square brackets (`[ ]`) are
@@ -1133,7 +1288,7 @@ This means you can also reference the first column as follows:
 
 ``` r
 # extract first column
-first_column_again <- clinical[ , 1]
+first_column_again <- animals[ , 1]
 ```
 
 Leaving one field blank means you want the entire set in the output (in
@@ -1142,11 +1297,35 @@ this case, all rows).
 **Exercise:** what is the difference in results between the last two
 lines of code?
 
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+# animals[1] returns a data.frame with only the first column selected
+class(first_column)
+```
+
+    ## [1] "data.frame"
+
+``` r
+# animals[ , 1] returns an integer vector with values from the first column
+class(first_column_again)
+```
+
+    ## [1] "integer"
+
+</details>
+
+<p>
+
+</p>
+
 Similarly, we can also extract only the first row across all columns:
 
 ``` r
 # extract first row 
-first_row <- clinical[1, ]
+first_row <- animals[1, ]
 ```
 
 We can also extract slices, or sections of rows and columns, such as a
@@ -1154,7 +1333,7 @@ single cell:
 
 ``` r
 # extract cell from first row of first column
-single_cell <- clinical[1,1]
+single_cell <- animals[1,1]
 ```
 
 To extract a range of cells, we use the same colon (`:`) syntax from
@@ -1162,7 +1341,7 @@ last time:
 
 ``` r
 # extract a range of cells, rows 1 to 3, second column
-range_cells <- clinical[1:3, 2]
+range_cells <- animals[1:3, 2]
 ```
 
 This works for ranges of columns as well.
@@ -1171,7 +1350,7 @@ We can also exclude particular parts of the dataset using a minus sign:
 
 ``` r
 # exclude first column
-exclude_col <- clinical[ , -1] 
+exclude_col <- animals[ , -1] 
 ```
 
 Combining what we know about R syntax, we can also exclude a range of
@@ -1179,7 +1358,7 @@ cells using the `c` function:
 
 ``` r
 # exclude first 100 rows
-exclude_range <- clinical[-c(1:100), ] 
+exclude_range <- animals[-c(1:100), ] 
 ```
 
 So far, we’ve been referencing parts of the dataset based on index
@@ -1188,8 +1367,8 @@ names in our dataset, we can also reference columns using those names:
 
 ``` r
 # extract column by name
-name_col1 <- clinical["tumor_stage"]
-name_col2 <- clinical[ , "tumor_stage"]
+name_col1 <- animals["taxa"]
+name_col2 <- animals[ , "taxa"]
 ```
 
 Note the example above features quotation marks around the column name.
@@ -1211,7 +1390,7 @@ The first is to use double square brackets:
 
 ``` r
 # double square brackets syntax
-name_col3 <- clinical[["tumor_stage"]]
+name_col3 <- animals[["taxa"]]
 ```
 
 You can think of this approach as digging deeply into a complex object
@@ -1223,7 +1402,7 @@ marks, and only one symbol):
 
 ``` r
 # dollar sign syntax
-name_col4 <- clinical$tumor_stage
+name_col4 <- animals$taxa
 ```
 
 Both of the last two approaches above return vectors. For more
@@ -1242,23 +1421,155 @@ that the dataframe will be stored in.
 
 ``` r
 # Export the data with the first hundred rows excluded
-write.csv(exclude_range, "data/clinical_subset.csv")
+write.csv(exclude_range, "data/animals_subset.csv")
 ```
 
 ## Exercises
 
-The following exercises all use the `clinical` object:
+The following exercises all use the `animals` object:
 
 **Exercise:** code as many different ways possible to extract the column
-days\_to\_death
+“genus”
 
-**Exercise:** extract the first 6 rows for only age at diagnosis and
-days to death
+<details>
 
-**Exercise:** calculate the range and mean for cigarettes per day
+<summary>**Solution**</summary>
 
-**Exercise:** In your clinical dataset, replace “not reported” in
-tumor\_stage with NA
+``` r
+animals$genus
+animals[5]
+animals[,5]
+animals[[5]]
+animals["genus"] 
+animals[ , "genus"] 
+animals[["genus"]]
+```
+
+</details>
+
+<p>
+
+</p>
+
+**Exercise:** extract the first 6 rows for only hindfoot length and
+species.
+
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+animals[1:6, c(3, 6)]
+```
+
+    ##   hindfoot_length  species
+    ## 1              32 albigula
+    ## 2              31 albigula
+    ## 3              NA albigula
+    ## 4              NA albigula
+    ## 5              NA albigula
+    ## 6              NA albigula
+
+</details>
+
+<p>
+
+</p>
+
+**Exercise:** calculate the range and mean for weight
+
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+range(animals$weight, na.rm = TRUE)
+```
+
+    ## [1]   4 280
+
+``` r
+mean(animals$weight, na.rm = TRUE)
+```
+
+    ## [1] 42.67243
+
+</details>
+
+<p>
+
+</p>
+
+**Exercise:** Create a `data.frame` (`animals_200`) containing only the
+data in row 200 of the `animals` dataset.
+
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+animals_200 <- animals[200, ]
+```
+
+</details>
+
+<p>
+
+</p>
+
+**Exercise:** Notice how `nrow()` gave you the number of rows in a
+`data.frame`? Use that number to pull out just that last row in
+`animals`. Compare that with what you see as the last row using `tail()`
+to make sure it’s meeting expectations. Pull out that last row using
+nrow() instead of the row number. Create a new data frame
+(`animals_last`) from that last row.
+
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+n_rows <- nrow(animals)
+animals_last <- animals[n_rows, ]
+```
+
+</details>
+
+<p>
+
+</p>
+
+**Exercise:** Use `nrow()` to extract the row that is in the middle of
+the data frame. Store the content of this row in an object named
+`animals_middle`.
+
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+animals_middle <- animals[n_rows / 2, ]
+```
+
+</details>
+
+<p>
+
+</p>
+
+**Exercise:** Combine `nrow()` with the `-` notation above to reproduce
+the behavior of `head(animals)`, keeping just the first through 6th rows
+of the `animals` dataset.
+
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+animals_head <- animals[-(7:n_rows), ]
+```
+
+</details>
 
 # Data manipulation with dplyr
 
@@ -1299,6 +1610,17 @@ Once you have the software installed, you’ll need to load it:
 library(dplyr)
 ```
 
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
 Loading packages is similar to opening a software application on your
 computer; it makes a previously installed set of software available for
 use. A few notes about loading packages:
@@ -1326,7 +1648,7 @@ First, we can explore selecting certain columns by name:
 
 ``` r
 # selecting columns with dplyr
-sel_columns <- select(clinical, tumor_stage, gender, disease)
+sel_columns <- select(animals, sex, weight, taxa)
 ```
 
 The syntax for the `select` function is to specify the dataset first,
@@ -1341,32 +1663,62 @@ As with base R functions, we can also select a range of columns:
 
 ``` r
 # select range of columns
-sel_columns2 <- select(clinical, tumor_stage:days_to_death)
+sel_columns2 <- select(animals, sex:taxa)
+```
+
+We can also select all columns except certain ones by putting “-” in
+front of columns to exclude:
+
+``` r
+sel_columns3 <- select(animals, -sex, -hindfoot_length)
 ```
 
 In addition to these approaches, we can also use other helper functions
 for selecting columns: `starts_with()`, `ends_with()`, and `contains()`
 are examples that assist in extracting columns with headers that meet
-certain conditions. For example, using `starts_with(tumor)` in place of
-the column names will give you all columns that start with the word
-tumor.
+certain conditions. For example, using `starts_with(plot)` in place of
+the column names will give you all columns that start with the word plot
 
 We can use a separate function to extract rows that meet particular
 conditions:
 
 ``` r
-# select rows conditionally: keep only lung cancer cases
-filtered_rows <- filter(clinical, disease == "LUSC") 
+# select rows conditionally: keep only rodents
+filtered_rows <- filter(animals, taxa == "Rodent") 
 ```
 
 The syntax here is similar to `select`, and the conditional filters can
 be applied in similarly to base R functions.
 
-**Exercise:** create a new object from clinical called gender\_disease
-that includes only the gender and disease columns
+**Exercise:** create a new object from animals called sex\_taxa that
+includes only the sex and taxa columns
 
-**Exercise:** create a new object from gender\_disease called
-gender\_BRCA that includes only BRCA (disease)
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+sex_taxa <- select(animals, sex, taxa)
+```
+
+</details>
+
+<p>
+
+</p>
+
+**Exercise:** create a new object from sex\_taxa called sex\_Rodent that
+includes only Rodent (taxa)
+
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+sex_rodent <- filter(sex_taxa, taxa=="Rodent")
+```
+
+</details>
 
 ## Combining commands
 
@@ -1378,11 +1730,11 @@ other:
 
 ``` r
 # same task as exercises, but nested commands 
-gender_BRCA2 <- select(filter(clinical, disease == "BRCA"), gender, disease)
+sex_Rodent <- select(filter(animals, taxa == "Rodent"), sex, taxa)
 ```
 
-In this case, `filter(clinical, disease == "BRCA")` becomes the input
-for `select`.
+In this case, `filter(animals, taxa == "Rodent")` becomes the input for
+`select`.
 
 While this is a common approach, especially in base R, it can be
 difficult for us as coders to read and interpret the code.
@@ -1397,9 +1749,9 @@ We can use pipes to connect the same two data extraction tasks:
 
 ``` r
 # same task as above, but with pipes
-piped <- clinical %>%
-  select(gender, disease) %>%
-  filter(disease == "BRCA")
+piped <- animals %>%
+  select(sex, taxa) %>%
+  filter(taxa == "Rodent")
 ```
 
 The command above starts by naming the object that will result from this
@@ -1423,10 +1775,10 @@ it a lot easier to read and understand the code.
 Let’s take a look at another example of piped commands:
 
 ``` r
-# extract gender and disease from cases born prior to 1930
-piped2 <- clinical %>%
-  filter(year_of_birth < 1930) %>%
-  select(gender, disease)
+# extract sex and weight from samples before 1995
+piped2 <- animals %>%
+  filter(year < 1995) %>%
+  select(sex, weight)
 ```
 
 In the code above, we’re applying a mathematical condition to find
@@ -1436,8 +1788,8 @@ lines to see:
 
 ``` r
 piped3 <- clinical %>%
-  select(gender, disease) %>%
-  filter(year_of_birth < 1930)
+  select(sex, weight) %>%
+  filter(year < 1995)
 ```
 
 The code above should give you an error, because in this case, the order
@@ -1445,9 +1797,39 @@ does matter\! The output from the second line does not include the
 `year_of_birth` column, so R is unable to apply the filter in the third
 line.
 
-**Exercise:** Use pipes to extract the columns `gender`, `years_smoked`,
-and `year_of_birth` from the object `clinical` for only living patients
-(`vital_status`) who have smoked fewer than 1 `cigarettes_per_day`
+**Exercise:** Using pipes, subset the `animals` data to include animals
+under 5 grams collected before 1995, and retain only the columns `year`,
+`sex`, and `weight`.
+
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+animals %>%
+  filter(weight < 5) %>%
+  filter(year < 1995) %>%
+  select(year, sex, weight)
+```
+
+    ##    year  sex weight
+    ## 1  1981    F      4
+    ## 2  1982    F      4
+    ## 3  1985    F      4
+    ## 4  1985    M      4
+    ## 5  1981 <NA>      4
+    ## 6  1983    M      4
+    ## 7  1985    M      4
+    ## 8  1985    M      4
+    ## 9  1977    M      4
+    ## 10 1982    F      4
+    ## 11 1985    M      4
+    ## 12 1985    M      4
+    ## 13 1985    F      4
+    ## 14 1985    M      4
+    ## 15 1985    M      4
+
+</details>
 
 ## Mutate
 
@@ -1457,18 +1839,18 @@ functionality, however, including the ability to `mutate` columns.
 Common tasks for which `mutate` is useful include unit conversions,
 transformation, and creating ratios from among existing columns.
 
-We can use this function to convert the `days_to_death` column to years:
+We can use this function to convert the `weight` column to kilograms:
 
 ``` r
-# convert days to years
-clinical_years <- clinical %>%
-  mutate(years_to_death = days_to_death / 365)
+# convert grams to kilograms
+clinical_kg <- animals %>%
+  mutate(weight_kg = weight / 1000)
 ```
 
-The actual conversion works by providing a formula (`days_to_death
-/ 365`) and the name of the new column (`years_to_death`). If you
-inspect the resulting object, you’ll see `years_to_death` added as a new
-column at the end of the table.
+The actual conversion works by providing a formula (`weight / 1000`) and
+the name of the new column (`weight_kg`). If you inspect the resulting
+object, you’ll see `weight_kg` added as a new column at the end of the
+table.
 
 > `mutate` works by retaining all previous columns and creating new
 > columns as per the formula specified. `dplyr` also includes
@@ -1478,25 +1860,25 @@ column at the end of the table.
 We can use `mutate` to perform multiple conversions at once:
 
 ``` r
-# convert days to year and months at same time, and we don't always need to assign to object
-clinical %>%
-  mutate(years_to_death = days_to_death / 365,
-         months_to_death = days_to_death / 30) %>%
+# convert weight to kgs and lbs at same time, and we don't always need to assign to object
+animals %>%
+  mutate(weight_kg = weight / 1000,
+         weight_lb = weight_kg * 2.2) %>%
   glimpse() # preview data output
 ```
 
-    ## Rows: 6,832
+    ## Rows: 34,786
     ## Columns: 10
-    ## $ tumor_stage        <chr> "stage ia", "stage ib", "stage ib", "stage ia", "s…
-    ## $ vital_status       <chr> "dead", "dead", "dead", "alive", "dead", "alive", …
-    ## $ disease            <chr> "LUSC", "LUSC", "LUSC", "LUSC", "LUSC", "LUSC", "L…
-    ## $ gender             <chr> "male", "male", "female", "male", "male", "female"…
-    ## $ year_of_birth      <int> 1936, 1931, 1927, 1930, 1923, 1942, 1953, 1932, 19…
-    ## $ days_to_death      <int> 371, 136, 2304, NA, 146, NA, 345, 716, 2803, 973, …
-    ## $ cigarettes_per_day <dbl> 10.9589041, 2.1917808, 1.6438356, 1.0958904, NA, 2…
-    ## $ years_smoked       <int> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 26, NA, NA…
-    ## $ years_to_death     <dbl> 1.0164384, 0.3726027, 6.3123288, NA, 0.4000000, NA…
-    ## $ months_to_death    <dbl> 12.366667, 4.533333, 76.800000, NA, 4.866667, NA, …
+    ## $ year            <int> 1977, 1977, 1977, 1977, 1977, 1977, 1977, 1978, 1978,…
+    ## $ sex             <chr> "M", "M", NA, NA, NA, NA, NA, NA, "M", NA, NA, "M", "…
+    ## $ hindfoot_length <int> 32, 31, NA, NA, NA, NA, NA, NA, NA, NA, NA, 32, NA, 3…
+    ## $ weight          <int> NA, NA, NA, NA, NA, NA, NA, NA, 218, NA, NA, 204, 200…
+    ## $ genus           <chr> "Neotoma", "Neotoma", "Neotoma", "Neotoma", "Neotoma"…
+    ## $ species         <chr> "albigula", "albigula", "albigula", "albigula", "albi…
+    ## $ taxa            <chr> "Rodent", "Rodent", "Rodent", "Rodent", "Rodent", "Ro…
+    ## $ plot_type       <chr> "Control", "Control", "Control", "Control", "Control"…
+    ## $ weight_kg       <dbl> NA, NA, NA, NA, NA, NA, NA, NA, 0.218, NA, NA, 0.204,…
+    ## $ weight_lb       <dbl> NA, NA, NA, NA, NA, NA, NA, NA, 0.4796, NA, NA, 0.448…
 
 The code above also features a new function, `glimpse`, that can be
 useful when developing new piped code. Note that we did not assign the
@@ -1505,23 +1887,38 @@ Console. Because this is a large dataset, that type of output can be
 unweildy. `glimpse` allows us to see a preview of the data, including
 the two new columns created.
 
-**Exercise:** extract only lung cancer patients (LUSC, from disease) and
-create a new column called total\_cig representing an estimate of the
-total number of cigarettes smoked (use columns years smoked and
-cigarettes per day)
+**Exercise:** Create a new data frame from the surveys data that meets
+the following criteria: contains only the `species` column and a new
+column called `hindfoot_cm` containing the `hindfoot_length` values
+converted to centimeters. In this `hindfoot_cm` column, there are no NAs
+and all values are less than 3.
+
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+surveys_hindfoot_cm <- animals %>%
+    filter(!is.na(hindfoot_length)) %>%
+    mutate(hindfoot_cm = hindfoot_length / 10) %>%
+    filter(hindfoot_cm < 3) %>%
+    select(species, hindfoot_cm)
+```
+
+</details>
 
 ## Split-apply-combine
 
-Our `clinical` dataset includes categorical (character) data. One
-example is the `gender` column. We can assess the different categories
-available using a base R function:
+Our `animals` dataset includes categorical (character) data. One example
+is the `sex` column. We can assess the different categories available
+using a base R function:
 
 ``` r
 # show categories in gender
-unique(clinical$gender)
+unique(animals$sex)
 ```
 
-    ## [1] "male"   "female" NA
+    ## [1] "M" NA  "F"
 
 `dplyr` includes an approach called split-apply-combine that allows us
 to:
@@ -1535,17 +1932,17 @@ our dataset:
 
 ``` r
 # count number of individuals of each gender
-clinical %>%
-  group_by(gender) %>%
-  tally() 
+animals %>%
+  group_by(sex) %>%
+  tally()
 ```
 
     ## # A tibble: 3 x 2
-    ##   gender     n
-    ##   <chr>  <int>
-    ## 1 female  3535
-    ## 2 male    3258
-    ## 3 <NA>      39
+    ##   sex       n
+    ##   <chr> <int>
+    ## 1 F     15690
+    ## 2 M     17348
+    ## 3 <NA>   1748
 
 `group_by` is not particularly useful by itself, but powerful together
 with a second function like `tally`. The two columns in the resulting
@@ -1556,19 +1953,19 @@ An additional function for use with `group_by` is `summarize`:
 
 ``` r
 # summarize average days to death by gender
-clinical %>%
-  group_by(gender) %>%
-  summarize(mean_days_to_death = mean(days_to_death, na.rm = TRUE))
+animals %>%
+  group_by(sex) %>%
+  summarize(mean_weight = mean(weight, na.rm = TRUE))
 ```
 
     ## `summarise()` ungrouping output (override with `.groups` argument)
 
     ## # A tibble: 3 x 2
-    ##   gender mean_days_to_death
-    ##   <chr>               <dbl>
-    ## 1 female               947.
-    ## 2 male                 826.
-    ## 3 <NA>                 NaN
+    ##   sex   mean_weight
+    ##   <chr>       <dbl>
+    ## 1 F            42.2
+    ## 2 M            43.0
+    ## 3 <NA>         64.7
 
 Similar to `mutate`, we provide `summarize` with a formula indicating
 how we would like the groups to be handled.
@@ -1583,40 +1980,159 @@ grouping:
 
 ``` r
 # remove NA
-clinical %>%
-  filter(!is.na(gender)) %>%
-  group_by(gender) %>%
-  summarize(mean_days_to_death = mean(days_to_death))
+animals %>%
+  filter(!is.na(sex)) %>%
+  group_by(sex) %>%
+  summarize(mean_weight = mean(weight, na.rm=TRUE))
 ```
 
     ## `summarise()` ungrouping output (override with `.groups` argument)
 
     ## # A tibble: 2 x 2
-    ##   gender mean_days_to_death
-    ##   <chr>               <dbl>
-    ## 1 female                 NA
-    ## 2 male                   NA
+    ##   sex   mean_weight
+    ##   <chr>       <dbl>
+    ## 1 F            42.2
+    ## 2 M            43.0
 
-**Exercise:** create object called smoke\_complete from clinical that
-contains no missing data for cigarettes per day or age at diagnosis
+**Exercise:** Create a data frame called `measurements_complete` from
+`animals` that contains no missing data for weight or hindfoot length.
 
-**Exercise:** create a new object called birth\_complete that contains
-no missing data for year of birth or vital status
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+# option 1: using two filters
+measurements_complete <- animals %>%
+  filter(!is.na(weight)) %>%
+  filter(!is.na(hindfoot_length))
+
+# option 2: using one filter with a boolean operator
+measurements_complete <- animals %>%
+  filter(!is.na(weight) & !is.na(hindfoot_length))
+```
+
+</details>
+
+<p>
+
+</p>
+
+**Exercise:** How many animals were caught in each plot\_type surveyed?
+
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+animals %>%
+  count(plot_type) 
+```
+
+    ##                   plot_type     n
+    ## 1                   Control 15611
+    ## 2  Long-term Krat Exclosure  5118
+    ## 3          Rodent Exclosure  4233
+    ## 4 Short-term Krat Exclosure  5906
+    ## 5         Spectab exclosure  3918
+
+</details>
+
+<p>
+
+</p>
+
+**Exercise:** Use `group_by()` and `summarize()` to find the mean, min,
+and max hindfoot length for each species. Also add the number of
+observations (hint: see `?n`).
+
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+animals %>%
+  filter(!is.na(hindfoot_length)) %>%
+  group_by(species) %>%
+  summarize(
+    mean_hindfoot_length = mean(hindfoot_length),
+    min_hindfoot_length = min(hindfoot_length),
+    max_hindfoot_length = max(hindfoot_length),
+    n = n()
+  )
+```
+
+    ## `summarise()` ungrouping output (override with `.groups` argument)
+
+    ## # A tibble: 22 x 5
+    ##    species     mean_hindfoot_length min_hindfoot_length max_hindfoot_leng…     n
+    ##    <chr>                      <dbl>               <int>              <int> <int>
+    ##  1 albigula                    32.3                  21                 70  1074
+    ##  2 baileyi                     26.1                   2                 47  2864
+    ##  3 eremicus                    20.2                  11                 30  1212
+    ##  4 flavus                      15.6                   7                 38  1493
+    ##  5 fulvescens                  17.5                  15                 20    73
+    ##  6 fulviventer                 26.7                  21                 38    41
+    ##  7 harrisi                     33                    31                 35     2
+    ##  8 hispidus                    28.0                  20                 39   162
+    ##  9 intermedius                 22.2                  20                 23     9
+    ## 10 leucogaster                 20.5                  12                 39   920
+    ## # … with 12 more rows
+
+</details>
+
+<p>
+
+</p>
+
+**Exercise:** What was the heaviest animal measured in each year? Return
+the columns `year`, `genus`, `species`, and `weight`.
+
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+animals %>%
+  filter(!is.na(weight)) %>%
+  group_by(year) %>%
+  filter(weight == max(weight)) %>%
+  select(year, genus, species, weight) %>%
+  arrange(year)
+```
+
+    ## # A tibble: 27 x 4
+    ## # Groups:   year [26]
+    ##     year genus     species     weight
+    ##    <int> <chr>     <chr>        <int>
+    ##  1  1977 Dipodomys spectabilis    149
+    ##  2  1978 Neotoma   albigula       232
+    ##  3  1978 Neotoma   albigula       232
+    ##  4  1979 Neotoma   albigula       274
+    ##  5  1980 Neotoma   albigula       243
+    ##  6  1981 Neotoma   albigula       264
+    ##  7  1982 Neotoma   albigula       252
+    ##  8  1983 Neotoma   albigula       256
+    ##  9  1984 Neotoma   albigula       259
+    ## 10  1985 Neotoma   albigula       225
+    ## # … with 17 more rows
+
+</details>
 
 ## Filtering data based on number of cases of each type
 
 We’re going to perform one last manipulation on this second dataset for
-next time, which will allow us to reduce the total number of cancer
-types present in this dataset.
+next time, which will allow us to reduce the total number of species
+present in this dataset.
 
-First, we’ll need to count how many cases for each cancer type exist in
+First, we’ll need to count how many examples of each species exist in
 the dataset:
 
 ``` r
-# counting number of records in each cancer
-cancer_counts <- clinical %>%
-  count(disease) %>%
-  arrange(n) 
+# counting number of records for each species
+species_counts <- animals %>%
+  count(species) %>%
+  arrange(n)
 ```
 
 The `count` function is similar to `tally`, but doesn’t need to have
@@ -1625,38 +2141,70 @@ the table using the column specified. Although this isn’t necessary for
 the analysis to proceed, it makes it easier for us to interpret the
 results.
 
-Next, we’ll identify which cancer types are represented by at least 500
-cases in this dataset:
+Next, we’ll identify which species are represented by at least 500
+examples in this dataset:
 
 ``` r
-# get names of frequently occurring cancers
-frequent_cancers <- cancer_counts %>%
-  filter(n >= 500) 
+# get names of frequently occurring species
+frequent_species <- species_counts %>%
+  filter(n >= 500)
 ```
 
-We can then use this object to filter based on the number of cases:
+We can then use this object to filter based on the number of examples:
 
 ``` r
-# extract data from cancers to keep
-clinical_reduced <- clinical %>%
-  filter(disease %in% frequent_cancers$disease)
+# extract data from species to keep
+animals_reduced <- animals %>%
+  filter(species %in% frequent_species$species)
 ```
 
 The new syntax here is `%in%`, which allows you to compare each entry in
-`disease` from `clinical` to the disease column in `frequent_cancers`
-(remember that `frequent_cancers$disease` means the `disease` column
-from `frequent_cancers`). This keeps only cases from the `clinical`
-dataset that are from cancers that are frequently occurring.
+`species` from `animals` to the species column in `frequent_species`
+(remember that `frequent_species$species` means the `species` column
+from `frequent_species`). This keeps only cases from the `animals`
+dataset that are from species for which we have many examples.
 
 Finally, we’ll write the final output to a file:
 
 ``` r
-# save results to file in data/ named clinical_reduced
-write.csv(clinical_reduced, "data/clinical_reduced.csv")
+# save results to file in data/ named animals_reduced
+write.csv(animals_reduced, "data/animals_reduced.csv")
 ```
 
-**Exercise:** extract all tumor stages with more than 200 cases (Hint:
-also check to see if there are any other missing/ambiguous data\!)
+**Exercise:** extract all species with more than 200 examples
+
+<details>
+
+<summary>**Solution**</summary>
+
+``` r
+animals %>%
+  count(species) %>%
+  filter(n > 200)
+```
+
+    ##         species     n
+    ## 1      albigula  1252
+    ## 2       baileyi  2891
+    ## 3     bilineata   303
+    ## 4      eremicus  1299
+    ## 5        flavus  1597
+    ## 6       harrisi   437
+    ## 7   leucogaster  1006
+    ## 8   maniculatus   899
+    ## 9     megalotis  2609
+    ## 10     merriami 10596
+    ## 11        ordii  3027
+    ## 12 penicillatus  3123
+    ## 13  spectabilis  2504
+    ## 14    spilosoma   248
+    ## 15     torridus  2249
+
+</details>
+
+<p>
+
+</p>
 
 If you’d like more information on these functions and others available
 (including methods of joining multiple tables together), please check
