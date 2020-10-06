@@ -8,7 +8,7 @@ R](https://github.com/fredhutchio/r_intro) and the [Data Carpentry Intro
 to R](https://datacarpentry.org/R-ecology-lesson/), Copyright (c) Data
 Carpentry.
 
-## Objectives
+## Learning Objectives
 
 Welcome to Introduction to R\! This workshop introduces you R by working
 through common tasks in data science: importing, manipulating, and
@@ -1609,6 +1609,9 @@ Once you have the software installed, you’ll need to load it:
 # load library/package
 library(dplyr)
 ```
+
+    ## Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
+    ## when loading 'dplyr'
 
     ## 
     ## Attaching package: 'dplyr'
