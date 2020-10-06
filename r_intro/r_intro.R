@@ -44,13 +44,6 @@ weight_lb <- 2.2 * weight_kg
 weight_kg <- 100
 weight_kg
 
-# multiple operations
-mass <- 47.5            # mass?
-width  <- 122             # width?
-mass <- mass * 2.0      # mass?
-width  <- width - 20        # width?
-mass_index <- mass/width  # mass_index?
-
 #############
 ## Vectors ##
 #############
@@ -223,18 +216,19 @@ animals %>%
          weight_lb = weight_kg * 2.2) %>%
   glimpse() # preview data output
 
-# show categories in gender
+# show categories in sex
 unique(animals$sex)
 
-# count number of individuals of each gender
+# count number of individuals of each sex
 animals %>%
   group_by(sex) %>%
   tally()
 
-# summarize average days to death by gender
+# summarize average weight and median hindfoot length by sex
 animals %>%
   group_by(sex) %>%
-  summarize(mean_weight = mean(weight, na.rm = TRUE))
+  summarize(mean_weight = mean(weight, na.rm = TRUE),
+            median_foot_length = median(hindfoot_length, na.rm = TRUE))
 
 # remove NA
 animals %>%

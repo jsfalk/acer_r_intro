@@ -1520,7 +1520,7 @@ One example is the `sex` column.
 We can assess the different categories available using a base R function:
 
 ```{r}
-# show categories in gender
+# show categories in sex
 unique(animals$sex)
 ```
 
@@ -1530,10 +1530,10 @@ unique(animals$sex)
 - apply a task for each group, 
 - combine the results back together into a single table.
 
-We can try out this approach by counting the number of each gender in our dataset:
+We can try out this approach by counting the number of each sex in our dataset:
 
 ```{r}
-# count number of individuals of each gender
+# count number of individuals of each sex
 animals %>%
   group_by(sex) %>%
   tally()
@@ -1542,15 +1542,16 @@ animals %>%
 `group_by` is not particularly useful by itself, 
 but powerful together with a second function like `tally`.
 The two columns in the resulting tibble represent
-the categories from `group_by` and the number of cases for each gender (n).
+the categories from `group_by` and the number of cases for each sex (n).
 
 An additional function for use with `group_by` is `summarize`:
 
 ```{r}
-# summarize average days to death by gender
+# summarize average weight and median hindfoot length by sex
 animals %>%
   group_by(sex) %>%
-  summarize(mean_weight = mean(weight, na.rm = TRUE))
+  summarize(mean_weight = mean(weight, na.rm = TRUE),
+            median_foot_length = median(hindfoot_length, na.rm = TRUE))
 ```
 
 Similar to `mutate`, 
