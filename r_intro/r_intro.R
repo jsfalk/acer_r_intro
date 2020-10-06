@@ -1,3 +1,5 @@
+download.file("https://raw.githubusercontent.com/jsfalk/acer_tutorials/master/r_intro/r_intro.R")
+
 ################
 ## Arithmetic ##
 ################
