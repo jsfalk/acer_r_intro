@@ -201,7 +201,7 @@ sex_taxa <- select(animals, sex, taxa)
 sex_rodent <- filter(sex_taxa, taxa=="Rodent")
 
 # nested select and filter
-sex_rodent <- select(filter(animals, taxa == "Rodent"), sex, taxa)
+sex_rodent <- filter(select(animals, sex, taxa), taxa == "Rodent")
 
 # same task as above, but with pipes
 piped <- animals %>%

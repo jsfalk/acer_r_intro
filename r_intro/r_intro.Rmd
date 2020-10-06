@@ -1381,7 +1381,7 @@ you could nest one command inside the other:
 
 ```{r}
 # same task as exercises, but nested commands 
-sex_Rodent <- select(filter(animals, taxa == "Rodent"), sex, taxa)
+sex_rodent <- filter(select(animals, sex, taxa), taxa == "Rodent")
 ```
 
 In this case, `filter(animals, taxa == "Rodent")` becomes the input for `select`.
