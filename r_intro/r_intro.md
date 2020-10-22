@@ -297,7 +297,7 @@ arguments? How did you determine this?
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 `hist` computes a histogram from data and plots it. There is a required
 argument `x`, which is the data. The function has many optional
@@ -451,7 +451,7 @@ mass_index <- mass/width  # mass_index?
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 mass <- 47.5
@@ -576,7 +576,7 @@ are character data, rather than object names.
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 length(organs)
@@ -632,7 +632,7 @@ tricky <- c(1, 2, 3, "4")
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 Vectors can be of only one data type. R tries to convert (coerce) the
 content of this vector to find a “common denominator” that doesn’t lose
@@ -812,7 +812,7 @@ ages[ages > 50 & ages < 60]
 
 <details>
 
-<summary>**Solution**</summary> Yes, but you may need parentheses to
+**<summary>Solution</summary>** Yes, but you may need parentheses to
 specify the grouping. For example, the following selects all ages that
 are either less than 55 or between 59 and 64:
 
@@ -836,7 +836,7 @@ ages[ages < 55 | (ages >= 59 & ages <= 64)]
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 "four" > "five"
@@ -985,7 +985,7 @@ more_heights <- c(63, 69, 60, 65, NA, 68, 61, 70, 61, 59, 64, 69, 63, 63, NA, 72
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 # option 1: remove NAs from heights using na.omit
@@ -1165,13 +1165,20 @@ We can also preview the content by showing the first few rows:
 head(animals) 
 ```
 
-    ##   year  sex hindfoot_length weight   genus  species   taxa plot_type
-    ## 1 1977    M              32     NA Neotoma albigula Rodent   Control
-    ## 2 1977    M              31     NA Neotoma albigula Rodent   Control
-    ## 3 1977 <NA>              NA     NA Neotoma albigula Rodent   Control
-    ## 4 1977 <NA>              NA     NA Neotoma albigula Rodent   Control
-    ## 5 1977 <NA>              NA     NA Neotoma albigula Rodent   Control
-    ## 6 1977 <NA>              NA     NA Neotoma albigula Rodent   Control
+    ##   year sex hindfoot_length weight       genus      species   taxa
+    ## 1 1983   F              19     28   Onychomys     torridus Rodent
+    ## 2 1991                  NA     NA  Amphispiza    bilineata   Bird
+    ## 3 1987   F              32    162     Neotoma     albigula Rodent
+    ## 4 1995   M              36     44   Dipodomys     merriami Rodent
+    ## 5 2002   F              23     15 Chaetodipus penicillatus Rodent
+    ## 6 2002   F              22     18 Chaetodipus penicillatus Rodent
+    ##                  plot_type
+    ## 1 Long-term Krat Exclosure
+    ## 2                  Control
+    ## 3                  Control
+    ## 4                  Control
+    ## 5        Spectab exclosure
+    ## 6        Spectab exclosure
 
 The default number of rows shown is six. You can specify a different
 number using the `n =` parameter, demonstrated below using `tail`, which
@@ -1182,14 +1189,14 @@ shows the last few rows
 tail(animals, n = 3) 
 ```
 
-    ##       year  sex hindfoot_length weight       genus  species   taxa
-    ## 34784 1998    F              20      8  Peromyscus leucopus Rodent
-    ## 34785 1998 <NA>              NA     NA Chaetodipus      sp. Rodent
-    ## 34786 2000 <NA>              NA     NA Chaetodipus      sp. Rodent
-    ##              plot_type
-    ## 34784 Rodent Exclosure
-    ## 34785 Rodent Exclosure
-    ## 34786 Rodent Exclosure
+    ##       year sex hindfoot_length weight           genus      species   taxa
+    ## 34784 1988   F              37     50       Dipodomys        ordii Rodent
+    ## 34785 2001   M              23     17     Chaetodipus penicillatus Rodent
+    ## 34786 1995   F              17     18 Reithrodontomys    megalotis Rodent
+    ##                       plot_type
+    ## 34784                   Control
+    ## 34785 Short-term Krat Exclosure
+    ## 34786 Short-term Krat Exclosure
 
 We often need to reference the names of columns, so it’s useful to print
 only those to the screen:
@@ -1214,14 +1221,14 @@ str(animals)
 ```
 
     ## 'data.frame':    34786 obs. of  8 variables:
-    ##  $ year           : int  1977 1977 1977 1977 1977 1977 1977 1978 1978 1978 ...
-    ##  $ sex            : chr  "M" "M" NA NA ...
-    ##  $ hindfoot_length: int  32 31 NA NA NA NA NA NA NA NA ...
-    ##  $ weight         : int  NA NA NA NA NA NA NA NA 218 NA ...
-    ##  $ genus          : chr  "Neotoma" "Neotoma" "Neotoma" "Neotoma" ...
-    ##  $ species        : chr  "albigula" "albigula" "albigula" "albigula" ...
-    ##  $ taxa           : chr  "Rodent" "Rodent" "Rodent" "Rodent" ...
-    ##  $ plot_type      : chr  "Control" "Control" "Control" "Control" ...
+    ##  $ year           : int  1983 1991 1987 1995 2002 2002 1996 1985 1988 1995 ...
+    ##  $ sex            : chr  "F" "" "F" "M" ...
+    ##  $ hindfoot_length: num  19 NA 32 36 23 22 23 35 17 17 ...
+    ##  $ weight         : num  28 NA 162 44 15 18 20 42 10 7 ...
+    ##  $ genus          : chr  "Onychomys" "Amphispiza" "Neotoma" "Dipodomys" ...
+    ##  $ species        : chr  "torridus" "bilineata" "albigula" "merriami" ...
+    ##  $ taxa           : chr  "Rodent" "Bird" "Rodent" "Rodent" ...
+    ##  $ plot_type      : chr  "Long-term Krat Exclosure" "Control" "Control" "Control" ...
 
 The output provided includes:
 
@@ -1299,7 +1306,7 @@ lines of code?
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 # animals[1] returns a data.frame with only the first column selected
@@ -1433,7 +1440,7 @@ The following exercises all use the `animals` object:
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 animals$genus
@@ -1456,19 +1463,19 @@ species.
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 animals[1:6, c(3, 6)]
 ```
 
-    ##   hindfoot_length  species
-    ## 1              32 albigula
-    ## 2              31 albigula
-    ## 3              NA albigula
-    ## 4              NA albigula
-    ## 5              NA albigula
-    ## 6              NA albigula
+    ##   hindfoot_length      species
+    ## 1              19     torridus
+    ## 2              NA    bilineata
+    ## 3              32     albigula
+    ## 4              36     merriami
+    ## 5              23 penicillatus
+    ## 6              22 penicillatus
 
 </details>
 
@@ -1480,7 +1487,7 @@ animals[1:6, c(3, 6)]
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 range(animals$weight, na.rm = TRUE)
@@ -1505,7 +1512,7 @@ data in row 200 of the `animals` dataset.
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 animals_200 <- animals[200, ]
@@ -1526,7 +1533,7 @@ nrow() instead of the row number. Create a new data frame
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 n_rows <- nrow(animals)
@@ -1545,7 +1552,7 @@ the data frame. Store the content of this row in an object named
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 animals_middle <- animals[n_rows / 2, ]
@@ -1563,7 +1570,7 @@ of the `animals` dataset.
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 animals_head <- animals[-(7:n_rows), ]
@@ -1698,7 +1705,7 @@ includes only the sex and taxa columns
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 sex_taxa <- select(animals, sex, taxa)
@@ -1715,7 +1722,7 @@ includes only Rodent (taxa)
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 sex_rodent <- filter(sex_taxa, taxa=="Rodent")
@@ -1733,7 +1740,7 @@ other:
 
 ``` r
 # same task as exercises, but nested commands 
-sex_Rodent <- select(filter(animals, taxa == "Rodent"), sex, taxa)
+sex_rodent <- filter(select(animals, sex, taxa), taxa == "Rodent")
 ```
 
 In this case, `filter(animals, taxa == "Rodent")` becomes the input for
@@ -1806,7 +1813,7 @@ under 5 grams collected before 1995, and retain only the columns `year`,
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 animals %>%
@@ -1815,22 +1822,22 @@ animals %>%
   select(year, sex, weight)
 ```
 
-    ##    year  sex weight
-    ## 1  1981    F      4
-    ## 2  1982    F      4
-    ## 3  1985    F      4
-    ## 4  1985    M      4
-    ## 5  1981 <NA>      4
-    ## 6  1983    M      4
-    ## 7  1985    M      4
-    ## 8  1985    M      4
-    ## 9  1977    M      4
-    ## 10 1982    F      4
-    ## 11 1985    M      4
-    ## 12 1985    M      4
-    ## 13 1985    F      4
-    ## 14 1985    M      4
-    ## 15 1985    M      4
+    ##    year sex weight
+    ## 1  1982   F      4
+    ## 2  1985   M      4
+    ## 3  1981          4
+    ## 4  1985   M      4
+    ## 5  1985   M      4
+    ## 6  1985   M      4
+    ## 7  1981   F      4
+    ## 8  1985   M      4
+    ## 9  1985   F      4
+    ## 10 1983   M      4
+    ## 11 1985   F      4
+    ## 12 1985   M      4
+    ## 13 1985   M      4
+    ## 14 1977   M      4
+    ## 15 1982   F      4
 
 </details>
 
@@ -1872,16 +1879,16 @@ animals %>%
 
     ## Rows: 34,786
     ## Columns: 10
-    ## $ year            <int> 1977, 1977, 1977, 1977, 1977, 1977, 1977, 1978, 1978,…
-    ## $ sex             <chr> "M", "M", NA, NA, NA, NA, NA, NA, "M", NA, NA, "M", "…
-    ## $ hindfoot_length <int> 32, 31, NA, NA, NA, NA, NA, NA, NA, NA, NA, 32, NA, 3…
-    ## $ weight          <int> NA, NA, NA, NA, NA, NA, NA, NA, 218, NA, NA, 204, 200…
-    ## $ genus           <chr> "Neotoma", "Neotoma", "Neotoma", "Neotoma", "Neotoma"…
-    ## $ species         <chr> "albigula", "albigula", "albigula", "albigula", "albi…
-    ## $ taxa            <chr> "Rodent", "Rodent", "Rodent", "Rodent", "Rodent", "Ro…
-    ## $ plot_type       <chr> "Control", "Control", "Control", "Control", "Control"…
-    ## $ weight_kg       <dbl> NA, NA, NA, NA, NA, NA, NA, NA, 0.218, NA, NA, 0.204,…
-    ## $ weight_lb       <dbl> NA, NA, NA, NA, NA, NA, NA, NA, 0.4796, NA, NA, 0.448…
+    ## $ year            <int> 1983, 1991, 1987, 1995, 2002, 2002, 1996, 1985, 1988,…
+    ## $ sex             <chr> "F", "", "F", "M", "F", "F", "F", "M", "F", "F", "F",…
+    ## $ hindfoot_length <dbl> 19, NA, 32, 36, 23, 22, 23, 35, 17, 17, 33, 36, 32, 3…
+    ## $ weight          <dbl> 28, NA, 162, 44, 15, 18, 20, 42, 10, 7, 120, 46, 152,…
+    ## $ genus           <chr> "Onychomys", "Amphispiza", "Neotoma", "Dipodomys", "C…
+    ## $ species         <chr> "torridus", "bilineata", "albigula", "merriami", "pen…
+    ## $ taxa            <chr> "Rodent", "Bird", "Rodent", "Rodent", "Rodent", "Rode…
+    ## $ plot_type       <chr> "Long-term Krat Exclosure", "Control", "Control", "Co…
+    ## $ weight_kg       <dbl> 0.028, NA, 0.162, 0.044, 0.015, 0.018, 0.020, 0.042, …
+    ## $ weight_lb       <dbl> 0.0616, NA, 0.3564, 0.0968, 0.0330, 0.0396, 0.0440, 0…
 
 The code above also features a new function, `glimpse`, that can be
 useful when developing new piped code. Note that we did not assign the
@@ -1898,7 +1905,7 @@ and all values are less than 3.
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 surveys_hindfoot_cm <- animals %>%
@@ -1917,11 +1924,11 @@ is the `sex` column. We can assess the different categories available
 using a base R function:
 
 ``` r
-# show categories in gender
+# show categories in sex
 unique(animals$sex)
 ```
 
-    ## [1] "M" NA  "F"
+    ## [1] "F" ""  "M"
 
 `dplyr` includes an approach called split-apply-combine that allows us
 to:
@@ -1930,11 +1937,11 @@ to:
   - apply a task for each group,
   - combine the results back together into a single table.
 
-We can try out this approach by counting the number of each gender in
-our dataset:
+We can try out this approach by counting the number of each sex in our
+dataset:
 
 ``` r
-# count number of individuals of each gender
+# count number of individuals of each sex
 animals %>%
   group_by(sex) %>%
   tally()
@@ -1943,32 +1950,33 @@ animals %>%
     ## # A tibble: 3 x 2
     ##   sex       n
     ##   <chr> <int>
-    ## 1 F     15690
-    ## 2 M     17348
-    ## 3 <NA>   1748
+    ## 1 ""     1748
+    ## 2 "F"   15690
+    ## 3 "M"   17348
 
 `group_by` is not particularly useful by itself, but powerful together
 with a second function like `tally`. The two columns in the resulting
 tibble represent the categories from `group_by` and the number of cases
-for each gender (n).
+for each sex (n).
 
 An additional function for use with `group_by` is `summarize`:
 
 ``` r
-# summarize average days to death by gender
+# summarize average weight and median hindfoot length by sex
 animals %>%
   group_by(sex) %>%
-  summarize(mean_weight = mean(weight, na.rm = TRUE))
+  summarize(mean_weight = mean(weight, na.rm = TRUE),
+            median_foot_length = median(hindfoot_length, na.rm = TRUE))
 ```
 
     ## `summarise()` ungrouping output (override with `.groups` argument)
 
-    ## # A tibble: 3 x 2
-    ##   sex   mean_weight
-    ##   <chr>       <dbl>
-    ## 1 F            42.2
-    ## 2 M            43.0
-    ## 3 <NA>         64.7
+    ## # A tibble: 3 x 3
+    ##   sex   mean_weight median_foot_length
+    ##   <chr>       <dbl>              <dbl>
+    ## 1 ""           64.7               21.5
+    ## 2 "F"          42.2               27  
+    ## 3 "M"          43.0               34
 
 Similar to `mutate`, we provide `summarize` with a formula indicating
 how we would like the groups to be handled.
@@ -1991,18 +1999,19 @@ animals %>%
 
     ## `summarise()` ungrouping output (override with `.groups` argument)
 
-    ## # A tibble: 2 x 2
+    ## # A tibble: 3 x 2
     ##   sex   mean_weight
     ##   <chr>       <dbl>
-    ## 1 F            42.2
-    ## 2 M            43.0
+    ## 1 ""           64.7
+    ## 2 "F"          42.2
+    ## 3 "M"          43.0
 
 **Exercise:** Create a data frame called `measurements_complete` from
 `animals` that contains no missing data for weight or hindfoot length.
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 # option 1: using two filters
@@ -2025,7 +2034,7 @@ measurements_complete <- animals %>%
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 animals %>%
@@ -2051,7 +2060,7 @@ observations (hint: see `?n`).
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 animals %>%
@@ -2069,7 +2078,7 @@ animals %>%
 
     ## # A tibble: 22 x 5
     ##    species     mean_hindfoot_length min_hindfoot_length max_hindfoot_leng…     n
-    ##    <chr>                      <dbl>               <int>              <int> <int>
+    ##    <chr>                      <dbl>               <dbl>              <dbl> <int>
     ##  1 albigula                    32.3                  21                 70  1074
     ##  2 baileyi                     26.1                   2                 47  2864
     ##  3 eremicus                    20.2                  11                 30  1212
@@ -2093,7 +2102,7 @@ the columns `year`, `genus`, `species`, and `weight`.
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 animals %>%
@@ -2107,7 +2116,7 @@ animals %>%
     ## # A tibble: 27 x 4
     ## # Groups:   year [26]
     ##     year genus     species     weight
-    ##    <int> <chr>     <chr>        <int>
+    ##    <int> <chr>     <chr>        <dbl>
     ##  1  1977 Dipodomys spectabilis    149
     ##  2  1978 Neotoma   albigula       232
     ##  3  1978 Neotoma   albigula       232
@@ -2178,7 +2187,7 @@ write.csv(animals_reduced, "data/animals_reduced.csv")
 
 <details>
 
-<summary>**Solution**</summary>
+**<summary>Solution</summary>**
 
 ``` r
 animals %>%

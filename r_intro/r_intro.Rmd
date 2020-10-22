@@ -272,7 +272,7 @@ because R is assuming you mean `round(x = 1, digits = 3.14)`.
 
 **Exercise:** what does the function `hist` do? What are its main arguments? How did you determine this?
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 
 `hist` computes a histogram from data and plots it. There is a required argument `x`,
 which is the data. The function has many optional arguments, but `breaks` is an important
@@ -412,7 +412,7 @@ width  <- width - 20        # width?
 mass_index <- mass/width  # mass_index?
 ```
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 
 ```{r}
 mass <- 47.5
@@ -496,7 +496,7 @@ rather than object names.
 - What type of data is `organs`?
 - get overview of `organs`
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 length(organs)
 class(organs)
@@ -529,7 +529,7 @@ char_logical <- c("a", "b", "c", TRUE)
 tricky <- c(1, 2, 3, "4")
 ```
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 
 Vectors can be of only one data type. R tries to convert (coerce) the content of this vector to find a “common denominator” that doesn’t lose any information. 
 
@@ -686,7 +686,7 @@ ages[ages > 50 & ages < 60]
 
 **Exercise:** Is it possible to apply more than two conditions at once?
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 Yes, but you may need parentheses to specify the grouping. For example, the following
 selects all ages that are either less than 55 or between 59 and 64:
 
@@ -702,7 +702,7 @@ ages[ages < 55 | (ages >= 59 & ages <= 64)]
 "four" > "five"
 ```
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 "four" > "five"
 ```
@@ -816,7 +816,7 @@ more_heights <- c(63, 69, 60, 65, NA, 68, 61, 70, 61, 59, 64, 69, 63, 63, NA, 72
 - Identify how many elements in the vector are greater than 67 inches
 - Visualize the data as a histogram (hint: function `hist`)
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 
 ```{r}
 # option 1: remove NAs from heights using na.omit
@@ -1049,7 +1049,7 @@ Leaving one field blank means you want the entire set in the output
 
 **Exercise:** what is the difference in results between the last two lines of code?
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 # animals[1] returns a data.frame with only the first column selected
 class(first_column)
@@ -1170,7 +1170,7 @@ The following exercises all use the `animals` object:
 
 **Exercise:** code as many different ways possible to extract the column "genus"
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r eval=FALSE}
 animals$genus
 animals[5]
@@ -1186,7 +1186,7 @@ animals[["genus"]]
 
 **Exercise:** extract the first 6 rows for only hindfoot length and species.
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 animals[1:6, c(3, 6)]
 ```
@@ -1196,7 +1196,7 @@ animals[1:6, c(3, 6)]
 
 **Exercise:** calculate the range and mean for weight
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 range(animals$weight, na.rm = TRUE)
 mean(animals$weight, na.rm = TRUE)
@@ -1207,7 +1207,7 @@ mean(animals$weight, na.rm = TRUE)
 
 **Exercise:**  Create a `data.frame` (`animals_200`) containing only the data in row 200 of the `animals` dataset.
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 animals_200 <- animals[200, ]
 ```
@@ -1217,7 +1217,7 @@ animals_200 <- animals[200, ]
 
 **Exercise:** Notice how `nrow()` gave you the number of rows in a `data.frame`? Use that number to pull out just that last row in `animals`. Compare that with what you see as the last row using `tail()` to make sure it’s meeting expectations. Pull out that last row using nrow() instead of the row number. Create a new data frame (`animals_last`) from that last row.
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 n_rows <- nrow(animals)
 animals_last <- animals[n_rows, ]
@@ -1228,7 +1228,7 @@ animals_last <- animals[n_rows, ]
 
 **Exercise:** Use `nrow()` to extract the row that is in the middle of the data frame. Store the content of this row in an object named `animals_middle`.
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 animals_middle <- animals[n_rows / 2, ]
 ```
@@ -1238,7 +1238,7 @@ animals_middle <- animals[n_rows / 2, ]
 
 **Exercise:** Combine `nrow()` with the `-` notation above to reproduce the behavior of `head(animals)`, keeping just the first through 6th rows of the `animals` dataset.
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 animals_head <- animals[-(7:n_rows), ]
 ```
@@ -1356,7 +1356,7 @@ and the conditional filters can be applied in similarly to base R functions.
 
 **Exercise:** create a new object from animals called sex_taxa that includes only the sex and taxa columns
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 sex_taxa <- select(animals, sex, taxa)
 ```
@@ -1366,7 +1366,7 @@ sex_taxa <- select(animals, sex, taxa)
 
 **Exercise:** create a new object from sex_taxa called sex_Rodent that includes only Rodent (taxa)
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 sex_rodent <- filter(sex_taxa, taxa=="Rodent")
 ```
@@ -1450,7 +1450,7 @@ so R is unable to apply the filter in the third line.
 
 **Exercise:** Using pipes, subset the `animals` data to include animals under 5 grams collected before 1995, and retain only the columns `year`, `sex`, and `weight`.
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 animals %>%
   filter(weight < 5) %>%
@@ -1503,7 +1503,7 @@ including the two new columns created.
 
 **Exercise:** Create a new data frame from the surveys data that meets the following criteria: contains only the `species` column and a new column called `hindfoot_cm` containing the `hindfoot_length` values converted to centimeters. In this `hindfoot_cm` column, there are no NAs and all values are less than 3.
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 surveys_hindfoot_cm <- animals %>%
     filter(!is.na(hindfoot_length)) %>%
@@ -1575,7 +1575,7 @@ animals %>%
 
 **Exercise:** Create a data frame called `measurements_complete` from `animals` that contains no missing data for weight or hindfoot length.
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 # option 1: using two filters
 measurements_complete <- animals %>%
@@ -1592,7 +1592,7 @@ measurements_complete <- animals %>%
 
 **Exercise:** How many animals were caught in each plot_type surveyed?
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 animals %>%
   count(plot_type) 
@@ -1603,7 +1603,7 @@ animals %>%
 
 **Exercise:** Use `group_by()` and `summarize()` to find the mean, min, and max hindfoot length for each species. Also add the number of observations (hint: see `?n`).
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 animals %>%
   filter(!is.na(hindfoot_length)) %>%
@@ -1621,7 +1621,7 @@ animals %>%
 
 **Exercise:** What was the heaviest animal measured in each year? Return the columns `year`, `genus`, `species`, and `weight`.
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 animals %>%
   filter(!is.na(weight)) %>%
@@ -1684,7 +1684,7 @@ write.csv(animals_reduced, "data/animals_reduced.csv")
 
 **Exercise:** extract all species with more than 200 examples
 
-<details><summary>**Solution**</summary>
+<details>**<summary>Solution</summary>**
 ```{r}
 animals %>%
   count(species) %>%
