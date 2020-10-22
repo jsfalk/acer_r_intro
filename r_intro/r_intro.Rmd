@@ -1524,6 +1524,16 @@ We can assess the different categories available using a base R function:
 unique(animals$sex)
 ```
 
+Note that instead of `NA`, missing data for this variable was coded as the string `"not reported"`. Let's update the dataframe to use `NA` using `na_if`:
+
+```{r}
+# show categories in sex
+animals <- animals %>%
+  mutate(sex = na_if(sex, "not reported"))
+
+unique(animals$sex)
+```
+
 `dplyr` includes an approach called split-apply-combine that allows us to: 
 
 - split data into groups, 

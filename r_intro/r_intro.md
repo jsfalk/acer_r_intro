@@ -1153,7 +1153,7 @@ To learn more about this data frame, we’ll first explore its dimensions:
 dim(animals)
 ```
 
-    ## [1] 34786     8
+    ## [1] 34786     9
 
 The output reflects the number of rows first (34786), then the number of
 columns (8).
@@ -1165,20 +1165,20 @@ We can also preview the content by showing the first few rows:
 head(animals) 
 ```
 
-    ##   year sex hindfoot_length weight       genus      species   taxa
-    ## 1 1983   F              19     28   Onychomys     torridus Rodent
-    ## 2 1991                  NA     NA  Amphispiza    bilineata   Bird
-    ## 3 1987   F              32    162     Neotoma     albigula Rodent
-    ## 4 1995   M              36     44   Dipodomys     merriami Rodent
-    ## 5 2002   F              23     15 Chaetodipus penicillatus Rodent
-    ## 6 2002   F              22     18 Chaetodipus penicillatus Rodent
-    ##                  plot_type
-    ## 1 Long-term Krat Exclosure
-    ## 2                  Control
-    ## 3                  Control
-    ## 4                  Control
-    ## 5        Spectab exclosure
-    ## 6        Spectab exclosure
+    ##   year          sex hindfoot_length weight       genus      species   taxa
+    ## 1 1983            F              19     28   Onychomys     torridus Rodent
+    ## 2 1991 not reported              NA     NA  Amphispiza    bilineata   Bird
+    ## 3 1987            F              32    162     Neotoma     albigula Rodent
+    ## 4 1995            M              36     44   Dipodomys     merriami Rodent
+    ## 5 2002            F              23     15 Chaetodipus penicillatus Rodent
+    ## 6 2002            F              22     18 Chaetodipus penicillatus Rodent
+    ##                  plot_type weight_oz
+    ## 1 Long-term Krat Exclosure 0.9876543
+    ## 2                  Control        NA
+    ## 3                  Control 5.7142857
+    ## 4                  Control 1.5520282
+    ## 5        Spectab exclosure 0.5291005
+    ## 6        Spectab exclosure 0.6349206
 
 The default number of rows shown is six. You can specify a different
 number using the `n =` parameter, demonstrated below using `tail`, which
@@ -1193,10 +1193,10 @@ tail(animals, n = 3)
     ## 34784 1988   F              37     50       Dipodomys        ordii Rodent
     ## 34785 2001   M              23     17     Chaetodipus penicillatus Rodent
     ## 34786 1995   F              17     18 Reithrodontomys    megalotis Rodent
-    ##                       plot_type
-    ## 34784                   Control
-    ## 34785 Short-term Krat Exclosure
-    ## 34786 Short-term Krat Exclosure
+    ##                       plot_type weight_oz
+    ## 34784                   Control 1.7636684
+    ## 34785 Short-term Krat Exclosure 0.5996473
+    ## 34786 Short-term Krat Exclosure 0.6349206
 
 We often need to reference the names of columns, so it’s useful to print
 only those to the screen:
@@ -1207,7 +1207,8 @@ names(animals)
 ```
 
     ## [1] "year"            "sex"             "hindfoot_length" "weight"         
-    ## [5] "genus"           "species"         "taxa"            "plot_type"
+    ## [5] "genus"           "species"         "taxa"            "plot_type"      
+    ## [9] "weight_oz"
 
 It’s also possible to view row names using`rownames(animals)`, but our
 data only possess numbers for row names so it’s not very informative.
@@ -1220,15 +1221,16 @@ of the object:
 str(animals) 
 ```
 
-    ## 'data.frame':    34786 obs. of  8 variables:
+    ## 'data.frame':    34786 obs. of  9 variables:
     ##  $ year           : int  1983 1991 1987 1995 2002 2002 1996 1985 1988 1995 ...
-    ##  $ sex            : chr  "F" "" "F" "M" ...
+    ##  $ sex            : chr  "F" "not reported" "F" "M" ...
     ##  $ hindfoot_length: num  19 NA 32 36 23 22 23 35 17 17 ...
     ##  $ weight         : num  28 NA 162 44 15 18 20 42 10 7 ...
     ##  $ genus          : chr  "Onychomys" "Amphispiza" "Neotoma" "Dipodomys" ...
     ##  $ species        : chr  "torridus" "bilineata" "albigula" "merriami" ...
     ##  $ taxa           : chr  "Rodent" "Bird" "Rodent" "Rodent" ...
     ##  $ plot_type      : chr  "Long-term Krat Exclosure" "Control" "Control" "Control" ...
+    ##  $ weight_oz      : num  0.988 NA 5.714 1.552 0.529 ...
 
 The output provided includes:
 
@@ -1263,7 +1265,15 @@ summary(animals)
     ##                                                                             
     ##                                                                             
     ##                                                                             
-    ## 
+    ##                                                                             
+    ##    weight_oz     
+    ##  Min.   :0.1411  
+    ##  1st Qu.:0.7055  
+    ##  Median :1.3051  
+    ##  Mean   :1.5052  
+    ##  3rd Qu.:1.6931  
+    ##  Max.   :9.8765  
+    ##  NA's   :2503
 
 For numeric data (such as `weight`), this output includes common
 statistics like median and mean, as well as the number of rows
@@ -1822,22 +1832,22 @@ animals %>%
   select(year, sex, weight)
 ```
 
-    ##    year sex weight
-    ## 1  1982   F      4
-    ## 2  1985   M      4
-    ## 3  1981          4
-    ## 4  1985   M      4
-    ## 5  1985   M      4
-    ## 6  1985   M      4
-    ## 7  1981   F      4
-    ## 8  1985   M      4
-    ## 9  1985   F      4
-    ## 10 1983   M      4
-    ## 11 1985   F      4
-    ## 12 1985   M      4
-    ## 13 1985   M      4
-    ## 14 1977   M      4
-    ## 15 1982   F      4
+    ##    year          sex weight
+    ## 1  1982            F      4
+    ## 2  1985            M      4
+    ## 3  1981 not reported      4
+    ## 4  1985            M      4
+    ## 5  1985            M      4
+    ## 6  1985            M      4
+    ## 7  1981            F      4
+    ## 8  1985            M      4
+    ## 9  1985            F      4
+    ## 10 1983            M      4
+    ## 11 1985            F      4
+    ## 12 1985            M      4
+    ## 13 1985            M      4
+    ## 14 1977            M      4
+    ## 15 1982            F      4
 
 </details>
 
@@ -1878,15 +1888,16 @@ animals %>%
 ```
 
     ## Rows: 34,786
-    ## Columns: 10
+    ## Columns: 11
     ## $ year            <int> 1983, 1991, 1987, 1995, 2002, 2002, 1996, 1985, 1988,…
-    ## $ sex             <chr> "F", "", "F", "M", "F", "F", "F", "M", "F", "F", "F",…
+    ## $ sex             <chr> "F", "not reported", "F", "M", "F", "F", "F", "M", "F…
     ## $ hindfoot_length <dbl> 19, NA, 32, 36, 23, 22, 23, 35, 17, 17, 33, 36, 32, 3…
     ## $ weight          <dbl> 28, NA, 162, 44, 15, 18, 20, 42, 10, 7, 120, 46, 152,…
     ## $ genus           <chr> "Onychomys", "Amphispiza", "Neotoma", "Dipodomys", "C…
     ## $ species         <chr> "torridus", "bilineata", "albigula", "merriami", "pen…
     ## $ taxa            <chr> "Rodent", "Bird", "Rodent", "Rodent", "Rodent", "Rode…
     ## $ plot_type       <chr> "Long-term Krat Exclosure", "Control", "Control", "Co…
+    ## $ weight_oz       <dbl> 0.9876543, NA, 5.7142857, 1.5520282, 0.5291005, 0.634…
     ## $ weight_kg       <dbl> 0.028, NA, 0.162, 0.044, 0.015, 0.018, 0.020, 0.042, …
     ## $ weight_lb       <dbl> 0.0616, NA, 0.3564, 0.0968, 0.0330, 0.0396, 0.0440, 0…
 
@@ -1928,7 +1939,21 @@ using a base R function:
 unique(animals$sex)
 ```
 
-    ## [1] "F" ""  "M"
+    ## [1] "F"            "not reported" "M"
+
+Note that instead of `NA`, missing data for this variable was coded as
+the string `"not reported"`. Let’s update the dataframe to use `NA`
+using `na_if`:
+
+``` r
+# show categories in sex
+animals <- animals %>%
+  mutate(sex = na_if(sex, "not reported"))
+
+unique(animals$sex)
+```
+
+    ## [1] "F" NA  "M"
 
 `dplyr` includes an approach called split-apply-combine that allows us
 to:
@@ -1950,9 +1975,9 @@ animals %>%
     ## # A tibble: 3 x 2
     ##   sex       n
     ##   <chr> <int>
-    ## 1 ""     1748
-    ## 2 "F"   15690
-    ## 3 "M"   17348
+    ## 1 F     15690
+    ## 2 M     17348
+    ## 3 <NA>   1748
 
 `group_by` is not particularly useful by itself, but powerful together
 with a second function like `tally`. The two columns in the resulting
@@ -1974,9 +1999,9 @@ animals %>%
     ## # A tibble: 3 x 3
     ##   sex   mean_weight median_foot_length
     ##   <chr>       <dbl>              <dbl>
-    ## 1 ""           64.7               21.5
-    ## 2 "F"          42.2               27  
-    ## 3 "M"          43.0               34
+    ## 1 F            42.2               27  
+    ## 2 M            43.0               34  
+    ## 3 <NA>         64.7               21.5
 
 Similar to `mutate`, we provide `summarize` with a formula indicating
 how we would like the groups to be handled.
@@ -1999,12 +2024,11 @@ animals %>%
 
     ## `summarise()` ungrouping output (override with `.groups` argument)
 
-    ## # A tibble: 3 x 2
+    ## # A tibble: 2 x 2
     ##   sex   mean_weight
     ##   <chr>       <dbl>
-    ## 1 ""           64.7
-    ## 2 "F"          42.2
-    ## 3 "M"          43.0
+    ## 1 F            42.2
+    ## 2 M            43.0
 
 **Exercise:** Create a data frame called `measurements_complete` from
 `animals` that contains no missing data for weight or hindfoot length.
