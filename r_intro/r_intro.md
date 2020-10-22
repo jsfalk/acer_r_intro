@@ -3,13 +3,6 @@ Introduction to R
 
 # Introduction
 
-This training adapted from the [Fred Hutch Intro to
-R](https://github.com/fredhutchio/r_intro) and the [Data Carpentry Intro
-to R](https://datacarpentry.org/R-ecology-lesson/), Copyright (c) Data
-Carpentry.
-
-## Learning Objectives
-
 Welcome to Introduction to R\! This workshop introduces you R by working
 through common tasks in data science: importing, manipulating, and
 exporting data.
@@ -18,8 +11,16 @@ R is a statistical and programming computer language widely used for a
 variety of applications.
 
 Before proceeding with these training materials, please ensure you have
+access to [Open OnDemand](https://ood.acer.uic.edu) or have locally
 installed both R and RStudio as described
 [here](http://www.fredhutch.io/software/#r-and-rstudio).
+
+This training adapted from the [Fred Hutch Intro to
+R](https://github.com/fredhutchio/r_intro) and the [Data Carpentry Intro
+to R](https://datacarpentry.org/R-ecology-lesson/), Copyright (c) Data
+Carpentry.
+
+## Learning Objectives
 
 By the end of this session, you should be able to:
 
@@ -562,7 +563,7 @@ data to be words instead:
 
 ``` r
 # vector of body parts
-organs <- c("lung", "prostate", "breast")
+organs <- c("lung", "kidney", "heart")
 ```
 
 In this case, each word is encased in quotation marks, indicating these
@@ -594,7 +595,7 @@ class(organs)
 str(organs)
 ```
 
-    ##  chr [1:3] "lung" "prostate" "breast"
+    ##  chr [1:3] "lung" "kidney" "heart"
 
 </details>
 
@@ -699,7 +700,7 @@ If we wanted to extract, or subset, a portion of a vector:
 organs[2] 
 ```
 
-    ## [1] "prostate"
+    ## [1] "kidney"
 
 In general, square brackets (`[ ]`) in R refer to a part of an object.
 The number 2 indicates the second value in the vector.
@@ -717,7 +718,7 @@ excludes that value from the output:
 organs[-2] 
 ```
 
-    ## [1] "lung"   "breast"
+    ## [1] "lung"  "heart"
 
 You may be tempted to try extracting multiple values at a time by
 separating the numbers with commas (e.g., `organs[2,3]`). This will
@@ -730,7 +731,7 @@ multiple values for subsetting:
 organs[c(1, 3)] 
 ```
 
-    ## [1] "lung"   "breast"
+    ## [1] "lung"  "heart"
 
 We’ll switch back to our numerical `ages` object to explore another
 common need when subsetting: extracting values based on a condition (or
@@ -1153,7 +1154,7 @@ To learn more about this data frame, we’ll first explore its dimensions:
 dim(animals)
 ```
 
-    ## [1] 34786     9
+    ## [1] 34786     8
 
 The output reflects the number of rows first (34786), then the number of
 columns (8).
@@ -1172,13 +1173,13 @@ head(animals)
     ## 4 1995            M              36     44   Dipodomys     merriami Rodent
     ## 5 2002            F              23     15 Chaetodipus penicillatus Rodent
     ## 6 2002            F              22     18 Chaetodipus penicillatus Rodent
-    ##                  plot_type weight_oz
-    ## 1 Long-term Krat Exclosure 0.9876543
-    ## 2                  Control        NA
-    ## 3                  Control 5.7142857
-    ## 4                  Control 1.5520282
-    ## 5        Spectab exclosure 0.5291005
-    ## 6        Spectab exclosure 0.6349206
+    ##                  plot_type
+    ## 1 Long-term Krat Exclosure
+    ## 2                  Control
+    ## 3                  Control
+    ## 4                  Control
+    ## 5        Spectab exclosure
+    ## 6        Spectab exclosure
 
 The default number of rows shown is six. You can specify a different
 number using the `n =` parameter, demonstrated below using `tail`, which
@@ -1193,10 +1194,10 @@ tail(animals, n = 3)
     ## 34784 1988   F              37     50       Dipodomys        ordii Rodent
     ## 34785 2001   M              23     17     Chaetodipus penicillatus Rodent
     ## 34786 1995   F              17     18 Reithrodontomys    megalotis Rodent
-    ##                       plot_type weight_oz
-    ## 34784                   Control 1.7636684
-    ## 34785 Short-term Krat Exclosure 0.5996473
-    ## 34786 Short-term Krat Exclosure 0.6349206
+    ##                       plot_type
+    ## 34784                   Control
+    ## 34785 Short-term Krat Exclosure
+    ## 34786 Short-term Krat Exclosure
 
 We often need to reference the names of columns, so it’s useful to print
 only those to the screen:
@@ -1207,8 +1208,7 @@ names(animals)
 ```
 
     ## [1] "year"            "sex"             "hindfoot_length" "weight"         
-    ## [5] "genus"           "species"         "taxa"            "plot_type"      
-    ## [9] "weight_oz"
+    ## [5] "genus"           "species"         "taxa"            "plot_type"
 
 It’s also possible to view row names using`rownames(animals)`, but our
 data only possess numbers for row names so it’s not very informative.
@@ -1221,7 +1221,7 @@ of the object:
 str(animals) 
 ```
 
-    ## 'data.frame':    34786 obs. of  9 variables:
+    ## 'data.frame':    34786 obs. of  8 variables:
     ##  $ year           : int  1983 1991 1987 1995 2002 2002 1996 1985 1988 1995 ...
     ##  $ sex            : chr  "F" "not reported" "F" "M" ...
     ##  $ hindfoot_length: num  19 NA 32 36 23 22 23 35 17 17 ...
@@ -1230,7 +1230,6 @@ str(animals)
     ##  $ species        : chr  "torridus" "bilineata" "albigula" "merriami" ...
     ##  $ taxa           : chr  "Rodent" "Bird" "Rodent" "Rodent" ...
     ##  $ plot_type      : chr  "Long-term Krat Exclosure" "Control" "Control" "Control" ...
-    ##  $ weight_oz      : num  0.988 NA 5.714 1.552 0.529 ...
 
 The output provided includes:
 
@@ -1265,15 +1264,7 @@ summary(animals)
     ##                                                                             
     ##                                                                             
     ##                                                                             
-    ##                                                                             
-    ##    weight_oz     
-    ##  Min.   :0.1411  
-    ##  1st Qu.:0.7055  
-    ##  Median :1.3051  
-    ##  Mean   :1.5052  
-    ##  3rd Qu.:1.6931  
-    ##  Max.   :9.8765  
-    ##  NA's   :2503
+    ## 
 
 For numeric data (such as `weight`), this output includes common
 statistics like median and mean, as well as the number of rows
@@ -1888,7 +1879,7 @@ animals %>%
 ```
 
     ## Rows: 34,786
-    ## Columns: 11
+    ## Columns: 10
     ## $ year            <int> 1983, 1991, 1987, 1995, 2002, 2002, 1996, 1985, 1988,…
     ## $ sex             <chr> "F", "not reported", "F", "M", "F", "F", "F", "M", "F…
     ## $ hindfoot_length <dbl> 19, NA, 32, 36, 23, 22, 23, 35, 17, 17, 33, 36, 32, 3…
@@ -1897,7 +1888,6 @@ animals %>%
     ## $ species         <chr> "torridus", "bilineata", "albigula", "merriami", "pen…
     ## $ taxa            <chr> "Rodent", "Bird", "Rodent", "Rodent", "Rodent", "Rode…
     ## $ plot_type       <chr> "Long-term Krat Exclosure", "Control", "Control", "Co…
-    ## $ weight_oz       <dbl> 0.9876543, NA, 5.7142857, 1.5520282, 0.5291005, 0.634…
     ## $ weight_kg       <dbl> 0.028, NA, 0.162, 0.044, 0.015, 0.018, 0.020, 0.042, …
     ## $ weight_lb       <dbl> 0.0616, NA, 0.3564, 0.0968, 0.0330, 0.0396, 0.0440, 0…
 

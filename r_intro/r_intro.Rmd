@@ -10,16 +10,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-This training adapted from the [Fred Hutch Intro to R](https://github.com/fredhutchio/r_intro) and the [Data Carpentry Intro to R](https://datacarpentry.org/R-ecology-lesson/), Copyright (c) Data Carpentry.
-
-## Learning Objectives
-
 Welcome to Introduction to R! This workshop introduces you R by working through common tasks in data science: importing, manipulating, and exporting data.
 
 R is a statistical and programming computer language widely used for a variety of applications.
 
 Before proceeding with these training materials,
-please ensure you have installed both R and RStudio as described [here](http://www.fredhutch.io/software/#r-and-rstudio).
+please ensure you have access to [Open OnDemand](https://ood.acer.uic.edu) or have locally installed both R and RStudio as described [here](http://www.fredhutch.io/software/#r-and-rstudio).
+
+This training adapted from the [Fred Hutch Intro to R](https://github.com/fredhutchio/r_intro) and the [Data Carpentry Intro to R](https://datacarpentry.org/R-ecology-lesson/), Copyright (c) Data Carpentry.
+
+## Learning Objectives
 
 By the end of this session, you should be able to:
 
@@ -482,7 +482,7 @@ it's also possible for data to be words instead:
 
 ```{r}
 # vector of body parts
-organs <- c("lung", "prostate", "breast")
+organs <- c("lung", "kidney", "heart")
 ```
 
 In this case,
