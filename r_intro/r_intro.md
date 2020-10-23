@@ -375,7 +375,7 @@ Thus, the value `weight_kg` represents is printed to the Console.
 We can also perform operations on an object:
 
 ``` r
-# multiple an object (convert kg to lb)
+# multiply an object (convert kg to lb)
 2.2 * weight_kg
 ```
 
@@ -1066,7 +1066,7 @@ the dataset:
 
 ``` r
 # download data from url
-#download.file("https://raw.githubusercontent.com/jsfalk/acer_tutorials/master/r_intro/data/animals.csv", "data/animals.csv")
+download.file("https://raw.githubusercontent.com/jsfalk/acer_tutorials/master/r_intro/data/animals.csv", "data/animals.csv")
 ```
 
 The code above has two arguments, both encompassed in quotation marks:
@@ -1798,7 +1798,7 @@ commands differ? We can switch the order of the `filter` and `select`
 lines to see:
 
 ``` r
-piped3 <- clinical %>%
+piped3 <- animals %>%
   select(sex, weight) %>%
   filter(year < 1995)
 ```
@@ -1854,7 +1854,7 @@ We can use this function to convert the `weight` column to kilograms:
 
 ``` r
 # convert grams to kilograms
-clinical_kg <- animals %>%
+animals_kg <- animals %>%
   mutate(weight_kg = weight / 1000)
 ```
 
@@ -1933,10 +1933,18 @@ unique(animals$sex)
 
 Note that instead of `NA`, missing data for this variable was coded as
 the string `"not reported"`. Let’s update the dataframe to use `NA`
-using `na_if`:
+using `na_if`, combined with mutate:
 
 ``` r
-# show categories in sex
+# replace "not reported" with NA
+sex_na <- na_if(animals$sex, "not reported")
+head(sex_na)
+```
+
+    ## [1] "F" NA  "F" "M" "F" "F"
+
+``` r
+# update the data frame
 animals <- animals %>%
   mutate(sex = na_if(sex, "not reported"))
 

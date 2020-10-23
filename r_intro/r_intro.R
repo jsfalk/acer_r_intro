@@ -1,3 +1,7 @@
+######################
+## Introduction to R #
+######################
+
 download.file("https://raw.githubusercontent.com/jsfalk/acer_tutorials/master/r_intro/r_intro.R", "r_intro.R")
 
 ################
@@ -36,7 +40,7 @@ round(digits = 1, x = 3.14)
 weight_kg <- 55
 # recall object
 weight_kg
-# multiple an object (convert kg to lb)
+# multiply an object (convert kg to lb)
 2.2 * weight_kg
 # assign weight conversion to object
 weight_lb <- 2.2 * weight_kg
@@ -65,7 +69,7 @@ mean(ages)
 range(ages)
 
 # vector of body parts
-organs <- c("lung", "prostate", "breast")
+organs <- c("lung", "kidney", "heart")
 
 length(organs)
 class(organs)
@@ -73,8 +77,11 @@ str(organs)
 
 # add a value to end of vector
 ages <- c(ages, 90) 
+print(ages)
+
 # add value at the beginning
 ages <- c(30, ages)
+print(ages)
 
 # extracting second value
 organs[2] 
@@ -128,7 +135,6 @@ dir.create("data")
 download.file("https://raw.githubusercontent.com/jsfalk/acer_tutorials/master/r_intro/data/animals.csv", "data/animals.csv")
 # import data and assign to object
 animals <- read.csv("data/animals.csv")
-
 # assess size of data frame
 dim(animals)
 # preview first few rows
@@ -144,25 +150,46 @@ summary(animals)
 
 # extract first column and assign to a variable
 first_column <- animals[1]
+head(first_column)
+
 # extract first row 
 first_row <- animals[1, ]
+head(first_row)
+
 # extract first column
 first_column_again <- animals[ , 1]
+head(first_column_again)
+
 # extract cell from first row of first column
 single_cell <- animals[1,1]
+single_cell
+
 # extract a range of cells, rows 1 to 3, second column
 range_cells <- animals[1:3, 2]
+range_cells
+
 # exclude first column
 exclude_col <- animals[ , -1] 
+head(exclude_col)
+
 # exclude first 100 rows
 exclude_range <- animals[-c(1:100), ] 
+head(exclude_range)
+
 # extract column by name
 name_col1 <- animals["taxa"]
+head(name_col1)
+
 name_col2 <- animals[ , "taxa"]
+head(name_col2)
+
 # double square brackets syntax
 name_col3 <- animals[["taxa"]]
+head(name_col3)
+
 # dollar sign syntax
 name_col4 <- animals$taxa
+head(name_col4)
 
 # Export the data with the first hundred rows excluded
 write.csv(exclude_range, "data/animals_subset.csv")
@@ -182,33 +209,44 @@ library(dplyr)
 
 # selecting columns with dplyr
 sel_columns <- select(animals, sex, weight, taxa)
+head(sel_columns)
+
 # select range of columns
 sel_columns2 <- select(animals, sex:taxa)
+head(sel_columns2)
+
 # select columns to remove
 sel_columns3 <- select(animals, -sex, -hindfoot_length)
+head(sel_columns3)
 
 # select rows conditionally: keep only rodents
 filtered_rows <- filter(animals, taxa == "Rodent") 
+head(filtered_rows)
 
 sex_taxa <- select(animals, sex, taxa)
 sex_rodent <- filter(sex_taxa, taxa=="Rodent")
+head(sex_rodent)
 
 # nested select and filter
 sex_rodent <- filter(select(animals, sex, taxa), taxa == "Rodent")
+head(sex_rodent)
 
 # same task as above, but with pipes
 piped <- animals %>%
   select(sex, taxa) %>%
   filter(taxa == "Rodent")
+head(piped)
 
 # extract sex and weight from samples before 1995
 piped2 <- animals %>%
   filter(year < 1995) %>%
   select(sex, weight)
+head(piped2)
 
 # convert grams to kilograms
-clinical_kg <- animals %>%
+animals_kg <- animals %>%
   mutate(weight_kg = weight / 1000)
+head(animals_kg)
 
 # convert weight to kgs and lbs at same time, and we don't always need to assign to object
 animals %>%
@@ -218,6 +256,15 @@ animals %>%
 
 # show categories in sex
 unique(animals$sex)
+
+# replace "not reported" with NA
+sex_na <- na_if(animals$sex, "not reported")
+head(sex_na)
+
+# update the data frame
+animals <- animals %>%
+  mutate(sex = na_if(sex, "not reported"))
+head(animals)
 
 # count number of individuals of each sex
 animals %>%
@@ -240,14 +287,17 @@ animals %>%
 species_counts <- animals %>%
   count(species) %>%
   arrange(n)
+head(species_counts)
 
 # get names of frequently occurring species
 frequent_species <- species_counts %>%
   filter(n >= 500)
+head(frequent_species)
 
 # extract data from species to keep
 animals_reduced <- animals %>%
   filter(species %in% frequent_species$species)
+head(animals_reduced)
 
 # save results to file in data/ named animals_reduced
 write.csv(animals_reduced, "data/animals_reduced.csv")
