@@ -1066,7 +1066,7 @@ the dataset:
 
 ``` r
 # download data from url
-download.file("https://raw.githubusercontent.com/jsfalk/acer_tutorials/master/r_intro/data/animals.csv", "data/animals.csv")
+download.file("https://raw.githubusercontent.com/jsfalk/acer_tutorials/main/r_intro/data/animals.csv", "data/animals.csv")
 ```
 
 The code above has two arguments, both encompassed in quotation marks:
@@ -1127,7 +1127,7 @@ for more options for importing data.
 
 > You can also import data directly into R using `read.csv`, using
 > `animals <-
-> read.csv("https://raw.githubusercontent.com/jsfalk/acer_tutorials/master/r_intro/data/animals.csv")`.
+> read.csv("https://raw.githubusercontent.com/jsfalk/acer_tutorials/main/r_intro/data/animals.csv")`.
 > For these lessons, we model downloading and importing in two steps, so
 > you retain a copy of the data on your computer. This reflects how
 > you’re likely to import your own data, as well as recommended
