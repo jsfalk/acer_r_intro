@@ -4,6 +4,7 @@
 
 library(ggplot2)
 library(dplyr)
+library(tidyr)
 library(ggthemes)
 
 # ensure we use a colorblind accessible palette
